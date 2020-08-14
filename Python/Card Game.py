@@ -11,9 +11,9 @@ print()
 # --- Authentication system
 
 # Gets txt file of player details as a list as ["name, password", "name, password"...]
-file = open("player_list.csv")
-player_list = file.read().splitlines()
-file.close()
+with open("player_list.csv") as f:
+    player_list = f.read().splitlines()
+
 
 # - Define an authenticator
 
@@ -60,9 +60,8 @@ auth(p2Name, p2Pass)
 # --- The game
 
 # Get deck as a list as ["colour number", ...]
-file = open("deck.txt")
-deck = file.read().splitlines()
-file.close()
+with open("deck.txt") as f:
+    deck = f.read().splitlines()
 
 random.shuffle(deck)
 
@@ -158,14 +157,12 @@ for i in win_cards:
 print()
 
 # Append score & player to scores.txt
-file = open("scores.txt", "a")
-file.write(str(winNum) + " " + winner + "\n")
-file.close()
+with open("scores.txt", "a") as f:
+    f.write(str(winNum) + " " + winner + "\n")
 
 # Get scores.txt as list called scores_all[] in the form ["score name", ...]
-file = open("scores.txt")
-scores_all = file.read().splitlines()
-file.close()
+with open("scores.txt") as f:
+    scores_all = f.read().splitlines()
 
 # Python will just sort the scores for me. Thanks guys!
 scores_high = sorted(scores_all, reverse=True)
