@@ -152,8 +152,8 @@ print()
 input("They had these cards:")
 print()
 
-for i in range(len(win_cards)):
-    print(win_cards[i])
+for i in win_cards:
+    print(i)
 
 print()
 
