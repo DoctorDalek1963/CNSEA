@@ -19,6 +19,7 @@ with open("player_list.csv") as f:
 
 
 def auth(name, password):
+    """Authorise player names and passwords."""
     # Formats player details correctly
     details = name + ", " + password
     match = 0
@@ -76,6 +77,7 @@ colourDict = {
 
 
 def win(card_list, player):
+    """Append cards to winner's stack and report win."""
     # Appends both cards to the winner's card stack
     card_list.append(p1ActiveCard)
     card_list.append(p2ActiveCard)
@@ -86,6 +88,7 @@ def win(card_list, player):
 
 
 def colour_compare(colour1, colour2):
+    """Compare colours and declare winner."""
     colour = colour1 + " " + colour2
     # Compares concatenated colour string with dictionary to get winning colour
     colour_win = colourDict.get(colour)
