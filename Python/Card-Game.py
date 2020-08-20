@@ -1,11 +1,10 @@
 import random
 
 # ===== Welcome and rules
-print()
 print("Welcome to The Card Game!")
 print("In this game, each player draws a card, the cards are compared and the winner takes both cards.")
 print()
-input("Press enter to continue.")
+input("Press enter to continue")
 print()
 
 # ===== Authentication system
@@ -32,7 +31,7 @@ def auth(name, password):
     # If no match was found
     if match != 1:
         print("Sorry, " + name + ", your username or password was incorrect.")
-        input("Press enter to exit.")
+        input("Press enter to exit")
         quit()
 
     print()
@@ -52,7 +51,7 @@ p2Pass = input("And your password: ")
 # Check that player 2 is a different person
 if p2Name == p1Name:
     print("Sorry, " + p2Name + ", but that's the same account as player 1.")
-    input("Press enter to exit.")
+    input("Press enter to exit")
     quit()
 
 auth(p2Name, p2Pass)
@@ -83,7 +82,7 @@ def win(card_list, player):
     card_list.append(p2ActiveCard)
     print(player + " won that hand!")
     print()
-    input("Press enter to continue.")
+    input("Press enter to continue")
     print()
 
 
@@ -115,7 +114,7 @@ while len(deck) > 0:
 
     print(p1Name + " drew a " + p1ActiveCard)
     print(p2Name + " drew a " + p2ActiveCard)
-    input("Press enter to continue.")
+    input("Press enter to continue")
     print()
 
     p1Colour = p1ActiveCard.split(" ")[0]
