@@ -20,7 +20,7 @@ with open("player_list.csv") as f:
 def auth(name, password):
     """Authorise player names and passwords."""
     # Formats player details correctly
-    details = name + ", " + password
+    details = name + "," + password
     match = 0
 
     # Searches player_list for details. If found, make match = 1
