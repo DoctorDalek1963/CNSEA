@@ -3,6 +3,7 @@
         Dim inputDetails, fileDetails As String
         Dim match As Boolean = False
 
+        ' Format inputted name and password
         inputDetails = name & "," & password
         FileOpen(0, "player_list.csv", OpenMode.Input)
 
