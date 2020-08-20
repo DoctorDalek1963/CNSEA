@@ -1,5 +1,5 @@
 ﻿Module Module1
-    Function Authenticate(name, password)
+    Sub Authenticate(name, password)
         Dim inputDetails, fileDetails As String
         Dim match As Boolean = False
 
@@ -26,10 +26,7 @@
 
         Console.WriteLine("Welcome, " & name & ", to The Card Game!")
         Console.WriteLine()
-
-#Disable Warning BC42105 ' Function doesn't return a value on all code paths
-    End Function
-#Enable Warning BC42105 ' Function doesn't return a value on all code paths
+    End Sub
     Function CompareColours(colour1, colour2)
         Dim colour As String = colour1 & "," & colour2 ' Format colours properly
         Dim winColour As String
