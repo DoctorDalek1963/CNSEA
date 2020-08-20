@@ -30,12 +30,12 @@ def auth(name, password):
 
     # If no match was found
     if match != 1:
-        print("Sorry, " + name + ", your username or password was incorrect.")
+        print(f"Sorry, {name}, your username or password was incorrect.")
         input("Press enter to exit")
         quit()
 
     print()
-    print("Welcome " + name + "!")
+    print(f"Welcome {name}!")
     print()
 
 
@@ -50,7 +50,7 @@ p2Pass = input("And your password: ")
 
 # Check that player 2 is a different person
 if p2Name == p1Name:
-    print("Sorry, " + p2Name + ", but that's the same account as player 1.")
+    print(f"Sorry, {p2Name}, but that's the same account as player 1.")
     input("Press enter to exit")
     quit()
 
@@ -75,12 +75,12 @@ colourDict = {
 }
 
 
-def win(card_list, player):
+def win_hand(card_list, player):
     """Append cards to winner's stack and report win."""
     # Appends both cards to the winner's card stack
     card_list.append(p1ActiveCard)
     card_list.append(p2ActiveCard)
-    print(player + " won that hand!")
+    print(f"{player} won that hand!")
     print()
     input("Press enter to continue")
     print()
@@ -88,13 +88,13 @@ def win(card_list, player):
 
 def colour_compare(colour1, colour2):
     """Compare colours and declare winner."""
-    colour = colour1 + " " + colour2
+    colour = f"{colour1} {colour2}"
     # Compares concatenated colour string with dictionary to get winning colour
     colour_win = colourDict.get(colour)
     if colour_win == colour1:
-        win(p1_cards, p1Name)
+        win_hand(p1_cards, p1Name)
     else:
-        win(p2_cards, p2Name)
+        win_hand(p2_cards, p2Name)
 
 
 # Initialises player's card stacks as empty
@@ -112,8 +112,8 @@ while len(deck) > 0:
     p2ActiveCard = deck[0]
     del deck[0]
 
-    print(p1Name + " drew a " + p1ActiveCard)
-    print(p2Name + " drew a " + p2ActiveCard)
+    print(f"{p1Name} drew a {p1ActiveCard}")
+    print(f"{p2Name} drew a {p2ActiveCard}")
     input("Press enter to continue")
     print()
 
@@ -126,9 +126,9 @@ while len(deck) > 0:
         p2Number = int(p2ActiveCard.split(" ")[1])
 
         if p1Number > p2Number:
-            win(p1_cards, p1Name)
+            win_hand(p1_cards, p1Name)
         else:
-            win(p2_cards, p2Name)
+            win_hand(p2_cards, p2Name)
 
     # If colours are different, call function
     else:
@@ -147,7 +147,7 @@ else:
     winNum = len(p2_cards)
     win_cards = p2_cards
 
-print(winner + "! With " + str(winNum) + " cards!")
+print(f"{winner}! With {winNum} cards!")
 print()
 
 input("They had these cards:")
@@ -160,7 +160,7 @@ print()
 
 # Append score & player to scores.txt
 with open("scores.txt", "a") as f:
-    f.write(str(winNum) + " " + winner + "\n")
+    f.write(f"{winNum} {winner}\n")
 
 # Get scores.txt as list called scores_all[] in the form ["score name", ...]
 with open("scores.txt") as f:
@@ -175,5 +175,5 @@ for i in range(5):
     print(scores_high[i])
 
 print()
-print("Thank you, " + p1Name + " and " + p2Name + ", for playing The Card Game!")
+print(f"Thank you, {p1Name} and {p2Name}, for playing The Card Game!")
 input("Goodbye!")

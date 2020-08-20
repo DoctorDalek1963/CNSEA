@@ -7,3 +7,4 @@ C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Release\Card Ga
 C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Release\Card Game.exe
 C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Release\Card Game.xml
 C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Release\Card Game.pdb
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Release\Card Game.vbprojAssemblyReference.cache

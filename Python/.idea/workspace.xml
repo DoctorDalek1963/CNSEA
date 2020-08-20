@@ -70,8 +70,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Card-Game" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.Card-Game" />
     </list>
     <recent_temporary>
       <list>
@@ -111,5 +111,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1280" height="259" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1597933735201" />
+    <state x="293" y="245" width="672" height="678" key="search.everywhere.popup" timestamp="1597937979197">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="293" y="245" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1597937979197" />
   </component>
 </project>
