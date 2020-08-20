@@ -1,0 +1,10 @@
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\bin\Debug\Card Game.exe.config
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\bin\Debug\Card Game.exe
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\bin\Debug\Card Game.pdb
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\bin\Debug\Card Game.xml
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Debug\Card Game.vbprojAssemblyReference.cache
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Debug\Card_Game.Resources.resources
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Debug\Card Game.vbproj.GenerateResource.cache
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Debug\Card Game.exe
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Debug\Card Game.xml
+C:\Users\joshu\Documents\GitHub\CNSEA\Visual Basic\Card Game\obj\Debug\Card Game.pdb
