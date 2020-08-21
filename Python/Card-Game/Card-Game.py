@@ -35,12 +35,9 @@ def win_hand(card_list, player):
 
 
 colourDict = {
-    'Red Black': 'Red',
-    'Black Red': 'Red',
-    'Yellow Red': 'Yellow',
-    'Red Yellow': 'Yellow',
-    'Black Yellow': 'Black',
-    'Yellow Black': 'Black'
+    'Red Black' or 'Black Red': 'Red',
+    'Yellow Red' or 'Red Yellow': 'Yellow',
+    'Black Yellow' or 'Yellow Black': 'Black'
 }
 
 
