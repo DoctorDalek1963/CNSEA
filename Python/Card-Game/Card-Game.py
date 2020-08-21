@@ -34,6 +34,16 @@ def win_hand(card_list, player):
     print()
 
 
+colourDict = {
+    'Red Black': 'Red',
+    'Black Red': 'Red',
+    'Yellow Red': 'Yellow',
+    'Red Yellow': 'Yellow',
+    'Black Yellow': 'Black',
+    'Yellow Black': 'Black'
+}
+
+
 def colour_compare(colour1, colour2):
     """Compare colours and declare winner."""
     colour = f"{colour1} {colour2}"
@@ -84,15 +94,6 @@ with open("deck.txt") as f:
     deck = f.read().splitlines()
 
 random.shuffle(deck)
-
-colourDict = {
-    'Red Black': 'Red',
-    'Black Red': 'Red',
-    'Yellow Red': 'Yellow',
-    'Red Yellow': 'Yellow',
-    'Black Yellow': 'Black',
-    'Yellow Black': 'Black'
-}
 
 # Initialises player's card stacks as empty
 p1_cards = []
