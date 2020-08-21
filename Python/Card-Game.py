@@ -1,23 +1,7 @@
 import random
 
-# ===== Welcome and rules
-print("Welcome to The Card Game!")
-print("In this game, each player draws a card, the cards are compared and the winner takes both cards.")
-print()
-input("Press enter to continue")
-print()
 
-# ===== Authentication system
-
-# Gets txt file of player details as a list as ["name, password", "name, password"...]
-with open("player_list.csv") as f:
-    player_list = f.read().splitlines()
-
-
-# ===== Define an authenticator
-
-
-def auth(name, password):
+def authenticate(name, password):
     """Authorise player names and passwords."""
     # Formats player details correctly
     details = name + "," + password
@@ -37,42 +21,6 @@ def auth(name, password):
     print()
     print(f"Welcome {name}!")
     print()
-
-
-# - Authenticate players
-p1Name = input("Player 1 please enter your name: ")
-p1Pass = input("And your password: ")
-
-auth(p1Name, p1Pass)
-
-p2Name = input("Player 2 please enter your name: ")
-p2Pass = input("And your password: ")
-
-# Check that player 2 is a different person
-if p2Name == p1Name:
-    print(f"Sorry, {p2Name}, but that's the same account as player 1.")
-    input("Press enter to exit")
-    quit()
-
-auth(p2Name, p2Pass)
-
-
-# ===== The game
-
-# Get deck as a list as ["colour number", ...]
-with open("deck.txt") as f:
-    deck = f.read().splitlines()
-
-random.shuffle(deck)
-
-colourDict = {
-    'Red Black': 'Red',
-    'Black Red': 'Red',
-    'Yellow Red': 'Yellow',
-    'Red Yellow': 'Yellow',
-    'Black Yellow': 'Black',
-    'Yellow Black': 'Black'
-}
 
 
 def win_hand(card_list, player):
@@ -96,6 +44,55 @@ def colour_compare(colour1, colour2):
     else:
         win_hand(p2_cards, p2Name)
 
+
+# ===== Welcome and rules
+
+print("Welcome to The Card Game!")
+print("In this game, each player draws a card, the cards are compared and the winner takes both cards.")
+print()
+input("Press enter to continue")
+print()
+
+# === Authentication system
+
+# Gets txt file of player details as a list as ["name, password", "name, password"...]
+with open("player_list.csv") as f:
+    player_list = f.read().splitlines()
+
+# Authenticate players
+p1Name = input("Player 1 please enter your name: ")
+p1Pass = input("And your password: ")
+
+authenticate(p1Name, p1Pass)
+
+p2Name = input("Player 2 please enter your name: ")
+p2Pass = input("And your password: ")
+
+# Check that player 2 is a different person
+if p2Name == p1Name:
+    print(f"Sorry, {p2Name}, but that's the same account as player 1.")
+    input("Press enter to exit")
+    quit()
+
+authenticate(p2Name, p2Pass)
+
+
+# ===== The game
+
+# Get deck as a list as ["colour number", ...]
+with open("deck.txt") as f:
+    deck = f.read().splitlines()
+
+random.shuffle(deck)
+
+colourDict = {
+    'Red Black': 'Red',
+    'Black Red': 'Red',
+    'Yellow Red': 'Yellow',
+    'Red Yellow': 'Yellow',
+    'Black Yellow': 'Black',
+    'Yellow Black': 'Black'
+}
 
 # Initialises player's card stacks as empty
 p1_cards = []
