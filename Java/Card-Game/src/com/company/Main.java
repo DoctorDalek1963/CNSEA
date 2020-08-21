@@ -7,7 +7,7 @@ public class Main {
 
     static void authenticate(String name, String password) {
         File deck = new File("deck.txt");
-        Scanner
+        Scanner ;
     }
 
     public static void main(String[] args) {
