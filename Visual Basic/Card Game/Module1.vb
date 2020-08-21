@@ -81,14 +81,13 @@
 
         Authenticate(p2name, p2Pass)
 
-        Dim deck(29) As String
+        Dim deck As New ArrayList
         Dim count As Integer = 0
         FileOpen(1, "deck.txt", OpenMode.Input)
         While Not EOF(1)
-            deck(count) = LineInput(1)
-            count += 1
+            deck.Add(LineInput(1))
         End While
-
+        FileClose(1)
 
         Console.WriteLine("Press enter to exit")
         Console.Read()
