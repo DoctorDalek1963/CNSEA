@@ -1,6 +1,4 @@
-Python/Card-Game/.idea/workspace.xml
-Java/Card-Game/.idea/workspace.xml
-Java/Card-Game/src/.idea/workspace.xml
+**/.idea/workspace.xml
+**/*.iml
 Visual Basic/Card Game/.vs/
-Visual Basic/Card Game/obj/Release/Card Game.vbproj.FileListAbsolute.txt
-Visual Basic/Card Game/obj/Debug/Card Game.vbproj.FileListAbsolute.txt
+**/Card Game.vbproj.FileListAbsolute.txt

@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.FileReader;
 
-public class Main {
+public class CardGame {
 
     static void authenticate(String name, String password) {
         // File deck = new File("deck.txt");
