@@ -6,6 +6,7 @@ public class CardGame {
 
     static void authenticate(String name, String password) {
         // Take a name and password and authenticate them if they're in player_list.csv
+
         Scanner inputScanner = new Scanner(System.in); // Create dummy scanner object to read input
 
         String playerDetails = name + "," + password;
@@ -16,8 +17,9 @@ public class CardGame {
             Scanner playerListReader = new Scanner(playerList);
 
             while (playerListReader.hasNextLine()) {
-                // Search file for match
+                // Search file for a match
                 String fileDetails = playerListReader.nextLine();
+                // If match is found, set flag var
                 if (fileDetails.equals(playerDetails)) {
                     match = true;
                 }
@@ -27,6 +29,7 @@ public class CardGame {
             System.out.println("player_list.csv was not found.");
         }
 
+        // If no match was found
         if (!match) {
             System.out.println();
             System.out.println("Sorry, " + name + ", your username or password was incorrect.");
