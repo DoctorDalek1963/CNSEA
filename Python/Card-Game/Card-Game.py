@@ -14,12 +14,13 @@ def authenticate(name, password):
 
     # If no match was found
     if match != 1:
+        print()
         print(f"Sorry, {name}, your username or password was incorrect.")
         input("Press enter to exit")
         quit()
 
     print()
-    print(f"Welcome {name}!")
+    print(f"Welcome, {name}!")
     print()
 
 

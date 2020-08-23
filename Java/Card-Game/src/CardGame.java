@@ -1,23 +1,78 @@
 import java.io.File;
-import java.io.FileReader;
+// import java.io.FileReader;
+import java.util.Scanner;
 
 public class CardGame {
 
     static void authenticate(String name, String password) {
-        // File deck = new File("deck.txt");
+        Scanner inputScanner = new Scanner(System.in); // Create dummy scanner object to read input
+
+        String playerDetails = name + "," + password;
+        boolean match = false;
+
         try {
-        FileReader deckRead = new FileReader("deck.txt");
+            File playerList = new File("player_list.csv");
+            Scanner playerListReader = new Scanner(playerList);
+
+            while (playerListReader.hasNextLine()) {
+                // Search file for match
+                String fileDetails = playerListReader.nextLine();
+                if (fileDetails.equals(playerDetails)) {
+                    match = true;
+                }
+            }
         }
         catch (Exception e) {
-            System.out.println("deck.txt was not found.");
+            System.out.println("player_list.csv was not found.");
         }
+
+        if (!match) {
+            System.out.println();
+            System.out.println("Sorry, " + name + ", your username or password was incorrect.");
+            System.out.println("Press enter to exit");
+            inputScanner.nextLine();
+            System.exit(0);
+        }
+
+        System.out.println();
+        System.out.println("Welcome, " + name + "!");
+        System.out.println();
+
     }
 
     public static void main(String[] args) {
+        Scanner inputScanner = new Scanner(System.in); // Create dummy scanner object to read input
+
         System.out.println("Welcome to The Card Game!");
         System.out.println("In this game, each player draws a card, the cards are compared and the winner takes both cards.");
         System.out.println();
         System.out.println("Press enter to continue");
+        inputScanner.nextLine();
+
+        System.out.print("Player 1, please enter your username: ");
+        String p1Name = inputScanner.nextLine();
+
+        System.out.print("Player 1, please enter your password: ");
+        String p1Pass = inputScanner.nextLine();
+
+        authenticate(p1Name, p1Pass);
+
+        System.out.print("Player 2, please enter your username: ");
+        String p2Name = inputScanner.nextLine();
+
+        System.out.print("Player 2, please enter your password: ");
+        String p2Pass = inputScanner.nextLine();
+
+        if (p1Name.equals(p2Name)) {
+            System.out.println("Sorry, " + p2Name + ", but that's the same account as player 1.");
+            System.out.println("Press enter to exit");
+            inputScanner.nextLine();
+            System.exit(0);
+        }
+
+        authenticate(p2Name, p2Pass);
+
+
     }
 
 }
