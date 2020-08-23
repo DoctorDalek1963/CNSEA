@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class CardGame {
 
     static void authenticate(String name, String password) {
+        // Take a name and password and authenticate them if they're in player_list.csv
         Scanner inputScanner = new Scanner(System.in); // Create dummy scanner object to read input
 
         String playerDetails = name + "," + password;
@@ -63,6 +64,7 @@ public class CardGame {
         System.out.print("Player 2, please enter your password: ");
         String p2Pass = inputScanner.nextLine();
 
+        // If same account, disallow it
         if (p1Name.equals(p2Name)) {
             System.out.println("Sorry, " + p2Name + ", but that's the same account as player 1.");
             System.out.println("Press enter to exit");
