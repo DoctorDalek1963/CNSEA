@@ -78,6 +78,15 @@
         Console.ReadLine()
     End Sub
     Sub Main()
+
+        Console.WriteLine("Welcome to The Card Game!")
+        Console.WriteLine("This is a two player game.")
+        Console.WriteLine("Each player draws a card, the cards are compared and the winner takes both cards.")
+        Console.WriteLine("The player with the most cards at the end wins.")
+        Console.WriteLine()
+        Console.WriteLine("Press enter to continue")
+        Console.ReadLine()
+
         Dim p1Pass, p2Pass As String
 
         Console.Write("Player 1, please enter your name: ")
