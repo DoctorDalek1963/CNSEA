@@ -101,8 +101,11 @@ p2_cards = []
 input("Let's begin the game!")
 print()
 
+handNum = 1
+
 # Loop until deck is empty
 while len(deck) > 0:
+    print("Hand number: {handNum}")
     # Both players take the top card
     p1ActiveCard = deck[0]
     del deck[0]
@@ -130,6 +133,8 @@ while len(deck) > 0:
     # If colours are different, call function
     else:
         colour_compare(p1Colour, p2Colour)
+
+    handNum = handNum + 1
 
 print("All cards have been drawn!")
 input("The winner is...")
@@ -163,7 +168,7 @@ with open("scores.txt", "a") as f:
 with open("scores.txt") as f:
     scores_all = f.read().splitlines()
 
-scores_high = sorted(scores_all, reverse=True) # Sort scores_high alphanumerically
+scores_high = sorted(scores_all, reverse=True) # Sort scores_high
 
 input("These are the high scores:")
 print()
