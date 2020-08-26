@@ -181,7 +181,28 @@
         Next
         Console.WriteLine()
 
+        FileOpen(2, "scores.txt", OpenMode.Append)
 
+        Dim score As String = winNum & " " & winner
+        PrintLine(2, score)
+
+        Dim allScores() As String
+        count = 0
+        While Not EOF(2)
+            allScores(count) = LineInput(2)
+            count += 1
+        End While
+
+        Array.Sort(allScores)
+
+        FileClose(2)
+
+        Console.WriteLine("These are the highscores: ")
+        Console.Read()
+
+        For i = 0 To 4
+            Console.WriteLine(allScores(i))
+        Next
 
         Console.WriteLine("Thank you, " & p1Name & " and " & p2Name & ", for playing The Card Game!")
         Console.WriteLine("Press enter to exit")
