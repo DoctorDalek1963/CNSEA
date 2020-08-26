@@ -78,7 +78,7 @@
         Console.WriteLine()
 
         ' If authentication fails, the program exits, and if it succeeds, it welcomes the player
-        'Authenticate(p1Name, p1Pass)
+        Authenticate(p1Name, p1Pass)
 
         Console.Write("Player 2, please enter your name: ")
         p2name = Console.ReadLine()
@@ -87,14 +87,14 @@
         Console.WriteLine()
 
         ' Check that player 2 is on a different account
-        'If p1Name = p2name Then
-        '    Console.WriteLine("Sorry, player 2, but that's the same account as player 1.")
-        '    Console.WriteLine("Press enter to exit")
-        '    Console.Read()
-        '    Environment.Exit(0)
-        'End If
+        If p1Name = p2Name Then
+            Console.WriteLine("Sorry, player 2, but that's the same account as player 1.")
+            Console.WriteLine("Press enter to exit")
+            Console.Read()
+            Environment.Exit(0)
+        End If
 
-        'Authenticate(p2name, p2Pass)
+        Authenticate(p2Name, p2Pass)
 
         Dim deck(29) As String
         Dim count As Integer = 0
@@ -102,8 +102,8 @@
         FileOpen(1, "deck.txt", OpenMode.Input)
 
         While Not EOF(1)
+            ' Add each line of deck.txt to deck()
             deck(count) = LineInput(1)
-            Console.WriteLine(deck)
             count += 1
         End While
 
@@ -113,23 +113,23 @@
 
         ' This shuffler always keeps the last item in the same place but I'm too lazy to care
         Dim j As Integer
-        Dim k As String
+        Dim temp As String
         For i = 0 To 29
             j = Int((29 - i) * Rnd() + i)
-            k = deck(i)
+            temp = deck(i)
             deck(i) = deck(j)
-            deck(j) = k
+            deck(j) = temp
         Next
 
         Console.WriteLine("Let's begin!")
         Console.Read()
         Console.WriteLine()
 
-        For i = 0 To 29 Step 2
+        For i = 0 To 29 Step 2 ' For every card in deck
             p1ActiveCard = deck(i)
             p2ActiveCard = deck(i + 1)
             Console.WriteLine(p1Name & " drew a " & p1ActiveCard)
-            Console.WriteLine(p2name & " drew a " & p2ActiveCard)
+            Console.WriteLine(p2Name & " drew a " & p2ActiveCard)
             Console.WriteLine("Press enter to continue")
             Console.Read()
             Console.WriteLine()
@@ -140,6 +140,7 @@
             p2Colour = p2ActiveCard.Split(" ")(0)
 
             If p1Colour = p2Colour Then
+                ' If same colour, highest number wins
                 p1Number = Int(p1ActiveCard.Split(" ")(1))
                 p2Number = Int(p2ActiveCard.Split(" ")(1))
 
@@ -161,15 +162,15 @@
         Dim winner, winCards() As String
         Dim winNum As Integer
 
+        ' Compare lengths of card stacks to find winner (person with most cards)
         If p1Cards.Length > p2Cards.Length Then
             winner = p1Name
             winCards = p1Cards
-            winNum = p1Cards.Length
         Else
             winner = p2Name
             winCards = p2Cards
-            winNum = p2Cards.Length
         End If
+        winNum = winCards.Length
 
         Console.WriteLine(winner & " with " & winNum & " cards!")
 
@@ -189,11 +190,12 @@
         Dim allScores() As String
         count = 0
         While Not EOF(2)
+            ' Add each line of scores.txt to allScores()
             allScores(count) = LineInput(2)
             count += 1
         End While
 
-        Array.Sort(allScores)
+        Array.Sort(allScores) ' Sort the array alphanumerically
 
         FileClose(2)
 
@@ -201,7 +203,7 @@
         Console.Read()
 
         For i = 0 To 4
-            Console.WriteLine(allScores(i))
+            Console.WriteLine(allScores(i)) ' Write top five scores
         Next
 
         Console.WriteLine("Thank you, " & p1Name & " and " & p2Name & ", for playing The Card Game!")
