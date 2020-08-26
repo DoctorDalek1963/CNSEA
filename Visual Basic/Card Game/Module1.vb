@@ -82,9 +82,10 @@
         Console.WriteLine("Welcome to The Card Game!")
         Console.WriteLine("This is a two player game.")
         Console.WriteLine("Each player draws a card, the cards are compared and the winner takes both cards.")
+        Console.WriteLine("In total, 15 hands are drawn.")
         Console.WriteLine("The player with the most cards at the end wins.")
         Console.WriteLine()
-        Console.WriteLine("Press enter to continue")
+        Console.WriteLine("Press enter to log in")
         Console.ReadLine()
 
         Dim p1Pass, p2Pass As String
@@ -216,6 +217,9 @@
 
         Dim score As String = winNum & " " & winner
         PrintLine(2, score)
+        FileClose(2)
+
+        FileOpen(2, "scores.txt", OpenMode.Input) ' We re-open the file to reset to the beginning and to only read
 
         count = 0
         While Not EOF(2)
@@ -225,6 +229,7 @@
         End While
 
         Array.Sort(allScores) ' Sort the array alphanumerically
+        Array.Reverse(allScores) ' Reverse the array to get it in the right order
 
         FileClose(2)
 
@@ -234,6 +239,7 @@
         For i = 0 To 4
             Console.WriteLine(allScores(i)) ' Write top five scores
         Next
+        Console.WriteLine()
 
         Console.WriteLine("Thank you, " & p1Name & " and " & p2Name & ", for playing The Card Game!")
         Console.WriteLine("Press enter to exit")

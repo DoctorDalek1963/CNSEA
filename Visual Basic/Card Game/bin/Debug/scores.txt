@@ -1,36 +1,4 @@
-18 Dave
-18 Dave
-20 p3
-18 p1
-16 p1
-16 p3
-20 p1
-18 p3
-16 p1
-18 p3
-16 p1
-18 p3
-20 p1
-24 Mike
-22 p3
-20 p1
-20 Dave
-20 p3
-20 p1
-20 p1
-18 p1
-16 p1
-16 Mike
-16 Dave
-18 p3
-16 p1
-20 p3
-22 p3
-18 John Doe
-16 p3
-16 p1
-20 p1
-18 p3
-23 guest1
-17 guest2
-22 guest2
+7 Demo scores
+6 Please ignore these lines
+5 They only exist to stop the program crashing
+4 You can remove these first 4 lines after playing the game at least 4 times
