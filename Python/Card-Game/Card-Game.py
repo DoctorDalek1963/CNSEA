@@ -162,8 +162,7 @@ with open("scores.txt", "a") as f:
 with open("scores.txt") as f:
     scores_all = f.read().splitlines()
 
-# Python will just sort the scores for me. Thanks guys!
-scores_high = sorted(scores_all, reverse=True)
+scores_high = sorted(scores_all, reverse=True) # Sort socres_high alphanumerically
 
 input("These are the high scores:")
 print()
