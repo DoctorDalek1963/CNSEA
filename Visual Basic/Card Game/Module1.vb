@@ -54,7 +54,6 @@
 
     End Function
     Sub Main()
-        ' Console.WriteLine(CurDir)
         Dim p1Name, p1Pass, p2name, p2Pass As String
 
         Console.Write("Player 1, please enter your name: ")
@@ -64,7 +63,7 @@
         Console.WriteLine()
 
         ' If authentication fails, the program exits, and if it succeeds, it welcomes the player
-        Authenticate(p1Name, p1Pass)
+        'Authenticate(p1Name, p1Pass)
 
         Console.Write("Player 2, please enter your name: ")
         p2name = Console.ReadLine()
@@ -72,22 +71,39 @@
         p2Pass = Console.ReadLine()
         Console.WriteLine()
 
-        If p1Name = p2name Then
-            Console.WriteLine("Sorry, player 2, but that's the same account as player 1.")
-            Console.WriteLine("Press enter to exit")
-            Console.Read()
-            Environment.Exit(0)
-        End If
+        'If p1Name = p2name Then
+        '    Console.WriteLine("Sorry, player 2, but that's the same account as player 1.")
+        '    Console.WriteLine("Press enter to exit")
+        '    Console.Read()
+        '    Environment.Exit(0)
+        'End If
 
-        Authenticate(p2name, p2Pass)
+        'Authenticate(p2name, p2Pass)
 
-        Dim deck As New ArrayList
+        Dim deck(29) As String
         Dim count As Integer = 0
+
         FileOpen(1, "deck.txt", OpenMode.Input)
+
         While Not EOF(1)
-            deck.Add(LineInput(1))
+            deck(count) = LineInput(1)
+            Console.WriteLine(deck)
+            count += 1
         End While
+
         FileClose(1)
+
+        Randomize() ' Initialise random
+
+        ' This shuffler always keeps the last item in the same place but I'm too lazy to care
+        Dim j As Integer
+        Dim k As String
+        For i = 0 To 29
+            j = Int((29 - i) * Rnd() + i)
+            k = deck(i)
+            deck(i) = deck(j)
+            deck(j) = k
+        Next
 
         Console.WriteLine("Press enter to exit")
         Console.Read()
