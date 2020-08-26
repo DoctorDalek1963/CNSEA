@@ -1,6 +1,6 @@
 ﻿Module Module1
     ' These are defined here to be used in different subroutines
-    Dim p1ActiveCard, p2ActiveCard, p1Cards(), p2Cards(), p1Name, p2Name As String
+    Dim p1ActiveCard, p2ActiveCard, p1Cards(0), p2Cards(0), p1Name, p2Name As String
     Sub Authenticate(name, password)
         Dim inputDetails, fileDetails As String
         Dim match As Boolean = False
@@ -8,23 +8,23 @@
         ' Format inputted name and password
         inputDetails = name & "," & password
 
-        FileOpen(0, "player_list.csv", OpenMode.Input)
+        FileOpen(1, "player_list.csv", OpenMode.Input)
 
         ' For each line in file, test if correct
-        While Not EOF(0)
-            fileDetails = LineInput(0)
+        While Not EOF(1)
+            fileDetails = LineInput(1)
             If inputDetails = fileDetails Then
                 match = True
             End If
         End While
 
-        FileClose(0)
+        FileClose(1)
 
         ' If no match found, exit program
         If match = False Then
             Console.WriteLine("Sorry, " & name & ", but your name or password was incorrect.")
             Console.WriteLine("Press enter to exit")
-            Console.Read()
+            Console.ReadLine()
             Environment.Exit(0)
         End If
 
@@ -32,18 +32,25 @@
         Console.WriteLine()
     End Sub
     Sub CompareColours(colour1, colour2)
-        Dim colour As String = colour1 & "," & colour2 ' Format colours properly
+        Dim colour As String = colour1 & " " & colour2 ' Format colours properly
         Dim winColour As String
 
         ' Find winning colour
         Select Case colour
-            Case "Red Black" Or "Black Red"
+
+            Case "Red Black"
+                winColour = "Red"
+            Case "Black Red"
                 winColour = "Red"
 
-            Case "Yellow Red" Or "Red Yellow"
+            Case "Yellow Red"
+                winColour = "Yellow"
+            Case "Red Yellow"
                 winColour = "Yellow"
 
-            Case "Black Yellow" Or "Yellow Black"
+            Case "Black Yellow"
+                winColour = "Black"
+            Case "Yellow Black"
                 winColour = "Black"
 
             Case Else
@@ -52,21 +59,23 @@
 
         ' Find winner from colour
         If winColour = colour1 Then
-            WinHand(p1Cards, p1Name)
+            ReDim Preserve p1Cards(0 To UBound(p1Cards) + 2)
+            p1Cards(UBound(p1Cards) - 1) = p1ActiveCard
+            p1Cards(UBound(p1Cards)) = p2ActiveCard
+            WinHand(p1Name)
         Else
-            WinHand(p2Cards, p2Name)
+            ReDim Preserve p2Cards(0 To UBound(p2Cards) + 2)
+            p2Cards(UBound(p2Cards) - 1) = p1ActiveCard
+            p2Cards(UBound(p2Cards)) = p2ActiveCard
+            WinHand(p2Name)
         End If
 
     End Sub
-    Sub WinHand(ByRef cardList, player)
-        ' Append both active cards to winner's card stack
-        cardList.Add(p1ActiveCard)
-        cardList.Add(p2ActiveCard)
+    Sub WinHand(player)
         Console.WriteLine(player & " won that hand!")
         Console.WriteLine()
         Console.WriteLine("Press enter to continue")
-        Console.Read()
-        Console.WriteLine()
+        Console.ReadLine()
     End Sub
     Sub Main()
         Dim p1Pass, p2Pass As String
@@ -81,7 +90,7 @@
         Authenticate(p1Name, p1Pass)
 
         Console.Write("Player 2, please enter your name: ")
-        p2name = Console.ReadLine()
+        p2Name = Console.ReadLine()
         Console.Write("Player 2, please enter your password: ")
         p2Pass = Console.ReadLine()
         Console.WriteLine()
@@ -90,7 +99,7 @@
         If p1Name = p2Name Then
             Console.WriteLine("Sorry, player 2, but that's the same account as player 1.")
             Console.WriteLine("Press enter to exit")
-            Console.Read()
+            Console.ReadLine()
             Environment.Exit(0)
         End If
 
@@ -122,17 +131,18 @@
         Next
 
         Console.WriteLine("Let's begin!")
-        Console.Read()
-        Console.WriteLine()
+        Console.ReadLine()
+
+        Dim handCount As Integer = 1
 
         For i = 0 To 29 Step 2 ' For every card in deck
             p1ActiveCard = deck(i)
             p2ActiveCard = deck(i + 1)
+            Console.WriteLine("Hand " & handCount & ":")
             Console.WriteLine(p1Name & " drew a " & p1ActiveCard)
             Console.WriteLine(p2Name & " drew a " & p2ActiveCard)
             Console.WriteLine("Press enter to continue")
-            Console.Read()
-            Console.WriteLine()
+            Console.ReadLine()
 
             Dim p1Colour, p2Colour, p1Number, p2Number As String
 
@@ -145,19 +155,26 @@
                 p2Number = Int(p2ActiveCard.Split(" ")(1))
 
                 If p1Number > p2Number Then
-                    WinHand(p1Cards, p1Name)
+                    ReDim Preserve p1Cards(0 To UBound(p1Cards) + 2)
+                    p1Cards(UBound(p1Cards) - 1) = p1ActiveCard
+                    p1Cards(UBound(p1Cards)) = p2ActiveCard
+                    WinHand(p1Name)
                 Else
-                    WinHand(p2Cards, p2Name)
+                    ReDim Preserve p2Cards(0 To UBound(p2Cards) + 2)
+                    p2Cards(UBound(p2Cards) - 1) = p1ActiveCard
+                    p2Cards(UBound(p2Cards)) = p2ActiveCard
+                    WinHand(p2Name)
                 End If
             Else
                 CompareColours(p1Colour, p2Colour)
             End If
 
+            handCount += 1
         Next
 
         Console.WriteLine("All cards have been drawn!")
         Console.WriteLine("The winner is ...")
-        Console.Read()
+        Console.ReadLine()
 
         Dim winner, winCards() As String
         Dim winNum As Integer
@@ -170,24 +187,27 @@
             winner = p2Name
             winCards = p2Cards
         End If
-        winNum = winCards.Length
+        winNum = winCards.Length - 1
 
         Console.WriteLine(winner & " with " & winNum & " cards!")
 
         Console.WriteLine("They had these cards: ")
-        Console.Read()
+        Console.ReadLine()
 
         For Each card In winCards
             Console.WriteLine(card)
         Next
         Console.WriteLine()
 
+        ' Get number of lines in scores.txt and set that as the length of allScores()
+        Dim scoresLength As Integer = System.IO.File.ReadAllLines("scores.txt").Length
+        Dim allScores(scoresLength) As String
+
         FileOpen(2, "scores.txt", OpenMode.Append)
 
         Dim score As String = winNum & " " & winner
         PrintLine(2, score)
 
-        Dim allScores() As String
         count = 0
         While Not EOF(2)
             ' Add each line of scores.txt to allScores()
@@ -200,7 +220,7 @@
         FileClose(2)
 
         Console.WriteLine("These are the highscores: ")
-        Console.Read()
+        Console.ReadLine()
 
         For i = 0 To 4
             Console.WriteLine(allScores(i)) ' Write top five scores

@@ -31,3 +31,6 @@
 16 p1
 20 p1
 18 p3
+23 guest1
+17 guest2
+22 guest2
