@@ -57,6 +57,7 @@ def colour_compare(colour1, colour2):
 
 print("Welcome to The Card Game!")
 print("In this game, each player draws a card, the cards are compared and the winner takes both cards.")
+print("The player with the most cards at the end wins.")
 print()
 input("Press enter to continue")
 print()
