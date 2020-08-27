@@ -217,30 +217,47 @@
 
         Dim score As String = winNum & " " & winner
         PrintLine(2, score)
+
         FileClose(2)
+        FileOpen(2, "scores.txt", OpenMode.Input) ' We re-open the file to reset to the beginning
 
-        FileOpen(2, "scores.txt", OpenMode.Input) ' We re-open the file to reset to the beginning and to only read
+        Dim numLines As Integer
 
-        count = 0
         While Not EOF(2)
-            ' Add each line of scores.txt to allScores()
-            allScores(count) = LineInput(2)
-            count += 1
+            LineInput(2)
+            numLines += 1
         End While
 
-        Array.Sort(allScores) ' Sort the array alphanumerically
-        Array.Reverse(allScores) ' Reverse the array to get it in the right order
-
         FileClose(2)
 
-        Console.WriteLine("These are the highscores: ")
-        Console.ReadLine()
+        If numLines < 5 Then
+            Console.WriteLine("There are not enough high scores to display them.")
+        Else
+            FileOpen(2, "scores.txt", OpenMode.Input)
 
-        For i = 0 To 4
-            Console.WriteLine(allScores(i)) ' Write top five scores
-        Next
+            count = 0
+            While Not EOF(2)
+                ' Add each line of scores.txt to allScores()
+                allScores(count) = LineInput(2)
+                count += 1
+            End While
+
+            Array.Sort(allScores) ' Sort the array alphanumerically
+            Array.Reverse(allScores) ' Reverse the array to get it in the right order
+
+            FileClose(2)
+
+            Console.WriteLine("These are the highscores: ")
+            Console.ReadLine()
+
+            For i = 0 To 4
+                Console.WriteLine(allScores(i)) ' Write top five scores
+            Next
+        End If
+
         Console.WriteLine()
-
+        Console.WriteLine("Press enter to finish")
+        Console.ReadLine()
         Console.WriteLine("Thank you, " & p1Name & " and " & p2Name & ", for playing The Card Game!")
         Console.WriteLine("Press enter to exit")
         Console.Read()
