@@ -105,7 +105,7 @@ handNum = 1
 
 # Loop until deck is empty
 while len(deck) > 0:
-    print("Hand number: {handNum}")
+    print(f"Hand: {handNum}")
     # Both players take the top card
     p1ActiveCard = deck[0]
     del deck[0]
@@ -114,6 +114,7 @@ while len(deck) > 0:
 
     print(f"{p1Name} drew a {p1ActiveCard}")
     print(f"{p2Name} drew a {p2ActiveCard}")
+    print()
     input("Press enter to continue")
     print()
 
@@ -164,17 +165,24 @@ print()
 with open("scores.txt", "a") as f:
     f.write(f"{winNum} {winner}\n")
 
-# Get scores.txt as list called scores_all[] in the form ["score name", ...]
-with open("scores.txt") as f:
-    scores_all = f.read().splitlines()
+numLines = len(open("scores.txt").readlines())
 
-scores_high = sorted(scores_all, reverse=True) # Sort scores_high
+if numLines < 5:
+    print("There are not enough high scores to display them.")
+else:
+    # Get scores.txt as list called scores_all[] in the form ["score name", ...]
+    with open("scores.txt") as f:
+        scores_all = f.read().splitlines()
 
-input("These are the high scores:")
+    scores_high = sorted(scores_all, reverse=True)  # Sort scores_high
+
+    input("These are the high scores:")
+    print()
+    for i in range(5):
+        print(scores_high[i])
+
 print()
-for i in range(5):
-    print(scores_high[i])
-
+input("Press enter to finish")
 print()
 print(f"Thank you, {p1Name} and {p2Name}, for playing The Card Game!")
 input("Goodbye!")
