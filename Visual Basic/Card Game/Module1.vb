@@ -92,7 +92,7 @@
 
         Console.Write("Player 1, please enter your name: ")
         p1Name = Console.ReadLine()
-        Console.Write("Player 1, please enter your password: ")
+        Console.Write("And your password: ")
         p1Pass = Console.ReadLine()
         Console.WriteLine()
 
@@ -101,7 +101,7 @@
 
         Console.Write("Player 2, please enter your name: ")
         p2Name = Console.ReadLine()
-        Console.Write("Player 2, please enter your password: ")
+        Console.Write("And your password: ")
         p2Pass = Console.ReadLine()
         Console.WriteLine()
 
@@ -207,7 +207,7 @@
         For Each card In winCards
             Console.WriteLine(card)
         Next
-        Console.WriteLine()
+        Console.ReadLine()
 
         ' Get number of lines in scores.txt and set that as the length of allScores()
         Dim scoresLength As Integer = System.IO.File.ReadAllLines("scores.txt").Length

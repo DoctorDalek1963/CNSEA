@@ -1,4 +1,0 @@
-7 Demo scores
-6 Please ignore these lines
-5 They only exist to stop the program crashing
-4 You can remove these first 4 lines after playing the game at least 4 times
