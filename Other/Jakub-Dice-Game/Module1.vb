@@ -157,14 +157,12 @@
             Console.WriteLine("These are the highscores: ")
             Console.ReadLine()
 
-            ' Dim line, lineArray() As String
-
             For i = 0 To 4
                 Console.WriteLine(allScores(i)) ' Write top five scores
             Next
         End If
 
-        Console.WriteLine("Thank you for playing Jakub failing to explain code!")
+        Console.WriteLine("Thank you for playing The Dice Game!")
         Console.WriteLine("Press enter to exit.")
         Console.Read()
 
