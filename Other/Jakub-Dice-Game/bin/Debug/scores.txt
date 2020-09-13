@@ -1,8 +1,0 @@
-22 guest2
-2 guest2
-2 guest2
-16 guest1
-14 guest1
-6 guest2
-14 guest2
-16 guest2

@@ -4,7 +4,7 @@
         Dim matchBool As Boolean
         Dim details() As String
 
-        FileOpen(1, "player_list.txt", OpenMode.Input)
+        FileOpen(1, "player_list.csv", OpenMode.Input)
         While Not EOF(1)
             details = LineInput(1).Split(",")
             If details(0) = name And details(1) = password Then
@@ -44,10 +44,43 @@
         Return score
 
     End Function
+    Sub AddPlayer()
+        Dim name, password As String
+
+        Console.Write("Please enter the name of the new player: ")
+        name = Console.ReadLine()
+        Console.Write("Please enter the password: ")
+        password = Console.ReadLine()
+
+        Dim newData As String = name & "," & password
+
+        FileOpen(3, "player_list.csv", OpenMode.Append)
+        PrintLine(3, newData)
+        FileClose(3)
+
+        Console.WriteLine()
+        Console.WriteLine(name & " added!")
+        Console.WriteLine()
+    End Sub
     Sub Main()
 
         Dim playerName, playerPass, p1, p2 As String
-        Dim match As Boolean
+        Dim match, addPlayerFlag As Boolean
+
+        Console.WriteLine("Welcome to The Dice Game!")
+        Console.WriteLine("Each player rolls a dice and the winner is decided by a set of rules.")
+        Console.WriteLine()
+        Console.Write("Type anything to add a new player. Press enter to log in. ")
+
+        If Not Console.ReadLine() = "" Then
+            addPlayerFlag = True
+        End If
+
+        Console.WriteLine()
+
+        If addPlayerFlag Then
+            AddPlayer()
+        End If
 
         Console.Write("Player 1, please enter your name: ")
         playerName = Console.ReadLine()
@@ -58,7 +91,7 @@
 
         match = Authenticator(playerName, playerPass)
 
-        If match = 0 Then
+        If Not match Then
             Console.WriteLine("Sorry, " & playerName & ", but your name or password was incorrect.")
             Console.WriteLine("Press enter to exit.")
             Console.Read()
