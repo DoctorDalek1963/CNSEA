@@ -210,8 +210,8 @@
         Console.ReadLine()
 
         ' Get number of lines in scores.txt and set that as the length of allScores()
-        Dim scoresLength As Integer = System.IO.File.ReadAllLines("scores.txt").Length
-        Dim allScores(scoresLength) As String
+        Dim numLines As Integer = System.IO.File.ReadAllLines("scores.txt").Length
+        Dim allScores(numLines) As String
 
         FileOpen(2, "scores.txt", OpenMode.Append)
 
@@ -220,8 +220,6 @@
 
         FileClose(2)
         FileOpen(2, "scores.txt", OpenMode.Input) ' We re-open the file to reset to the beginning
-
-        Dim numLines As Integer
 
         While Not EOF(2)
             LineInput(2)
@@ -242,10 +240,10 @@
                 count += 1
             End While
 
+            FileClose(2)
+
             Array.Sort(allScores) ' Sort the array alphanumerically
             Array.Reverse(allScores) ' Reverse the array to get it in the right order
-
-            FileClose(2)
 
             Console.WriteLine("These are the highscores: ")
             Console.ReadLine()

@@ -1,0 +1,11 @@
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\bin\Debug\Jakub-Dice-Game.exe.config
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\bin\Debug\Jakub-Dice-Game.exe
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\bin\Debug\Jakub-Dice-Game.pdb
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\bin\Debug\Jakub-Dice-Game.xml
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\obj\Debug\Jakub-Dice-Game.vbprojAssemblyReference.cache
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\obj\Debug\Jakub_Dice_Game.Resources.resources
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\obj\Debug\Jakub-Dice-Game.vbproj.GenerateResource.cache
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\obj\Debug\Jakub-Dice-Game.vbproj.CoreCompileInputs.cache
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\obj\Debug\Jakub-Dice-Game.exe
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\obj\Debug\Jakub-Dice-Game.xml
+C:\Users\joshu\Documents\GitHub\CNSEA\Other\Jakub-Dice-Game\obj\Debug\Jakub-Dice-Game.pdb
