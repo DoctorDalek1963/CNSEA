@@ -24,6 +24,21 @@ def authenticate(name, password):
     print()
 
 
+def add_player():
+    """Add new name and password to player_list."""
+    print()
+    name = input("Please enter the name of the new player: ")
+    password = input("Please enter the password: ")
+
+    new_data = f"{name},{password}\n"
+    with open("player_list.csv", "a") as file:
+        file.write(new_data)
+
+    print()
+    print(f"{name} added!")
+    print()
+
+
 def win_hand(card_list, player):
     """Append cards to winner's stack and report win."""
     # Appends both cards to the winner's card stack
@@ -60,7 +75,9 @@ print("In this game, each player draws a card, the cards are compared and the wi
 print("In total, 15 hands are drawn.")
 print("The player with the most cards at the end wins.")
 print()
-input("Press enter to log in")
+add_player_flag = input("Press 1 to add a new player. Press enter to log in. ")
+if add_player_flag:
+    add_player()
 print()
 
 # === Authentication system
