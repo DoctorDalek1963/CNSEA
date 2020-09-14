@@ -5,6 +5,7 @@
         Dim details() As String
 
         FileOpen(1, "player_list.csv", OpenMode.Input)
+        ' Cycle through player_list.csv to find details and set matchBool flag
         While Not EOF(1)
             details = LineInput(1).Split(",")
             If details(0) = name And details(1) = password Then
@@ -21,19 +22,24 @@
 
         Dim num1, num2, score As Integer
 
+        ' Get random numbers from 1-6
         Randomize()
         num1 = Int((6 * Rnd()) + 1)
         num2 = Int((6 * Rnd()) + 1)
 
+        ' Change score based on dice rolls
         If (num1 + num2) Mod 2 = 0 Then
             Console.WriteLine(name & " rolled an even number!")
             score += num1 + num2 + 10
+
         ElseIf (num1 + num2) Mod 2 = 1 Then
             Console.WriteLine(name & " rolled an odd number!")
             score += num1 + num2 - 5
+
         ElseIf num1 = num2 Then
             Console.WriteLine(name & " rolled a double!")
             score += num1 + num2 + Int((6 * Rnd()) + 1)
+
         End If
 
         If score < 0 Then
@@ -47,6 +53,7 @@
     Sub AddPlayer()
         Dim name, password As String
 
+        ' Get details of new player and add them to player_list.csv
         Console.Write("Please enter the name of the new player: ")
         name = Console.ReadLine()
         Console.Write("Please enter the password: ")
@@ -60,27 +67,25 @@
 
         Console.WriteLine()
         Console.WriteLine(name & " added!")
-        Console.WriteLine()
     End Sub
     Sub Main()
 
         Dim playerName, playerPass, p1, p2 As String
-        Dim match, addPlayerFlag As Boolean
+        Dim match As Boolean
 
         Console.WriteLine("Welcome to The Dice Game!")
         Console.WriteLine("Each player rolls a dice and the winner is decided by a set of rules.")
         Console.WriteLine()
         Console.Write("Type anything to add a new player. Press enter to log in. ")
 
-        If Not Console.ReadLine() = "" Then
-            addPlayerFlag = True
+        If Not Console.ReadLine() = "" Then ' If line isn't blank, call AddPlayer()
+            Console.WriteLine()
+            AddPlayer()
         End If
 
         Console.WriteLine()
 
-        If addPlayerFlag Then
-            AddPlayer()
-        End If
+        ' Authenticate player 1 and player 2
 
         Console.Write("Player 1, please enter your name: ")
         playerName = Console.ReadLine()
@@ -100,8 +105,6 @@
 
         Console.WriteLine("Welcome, " & playerName & ", to The Dice Game!")
         Console.WriteLine()
-
-
 
         Console.Write("Player 2, please enter your name: ")
         playerName = Console.ReadLine()
@@ -126,11 +129,11 @@
         Dim p1Score, p2Score, winScore As Integer
         Dim winner As String
 
+        ' Roll dice for both players 5 times
         For i = 1 To 5
             p1Score = DiceRoll(p1)
             p2Score = DiceRoll(p2)
             Console.WriteLine(p1 + "'s score is " & p1Score & " and " & p2 & "'s score is " & p2Score)
-
             Console.WriteLine("Press enter to continue.")
             Console.ReadLine()
             Console.WriteLine()
@@ -138,8 +141,8 @@
 
         If p1Score = p2Score Then
             Console.WriteLine("It's a tie! Let's roll another die to determine the winner!")
-
             Randomize()
+            ' Roll tie-break dice until winner is found
             Do
                 p1Score += Int((6 * Rnd()) + 1)
                 p2Score += Int((6 * Rnd()) + 1)
@@ -151,7 +154,9 @@
                 winner = p2
             End If
             Console.WriteLine("The winner is " & winner & "!")
+
         Else
+            ' Find winner by comparing scores
             If p1Score > p2Score Then
                 winner = p1
                 winScore = p1Score
@@ -162,6 +167,7 @@
             Console.WriteLine("The winner is " & winner & "!")
         End If
 
+        ' Add score to file
         FileOpen(1, "scores.txt", OpenMode.Append)
         PrintLine(1, (winScore & " " & winner))
         FileClose(1)
