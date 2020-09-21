@@ -63,9 +63,9 @@ def colour_compare(colour1, colour2):
     # Compares concatenated colour string with dictionary to get winning colour
     colour_win = colourDict.get(colour)
     if colour_win == colour1:
-        win_hand(p1_cards, p1Name)
+        win_hand(p1Cards, p1Name)
     else:
-        win_hand(p2_cards, p2Name)
+        win_hand(p2Cards, p2Name)
 
 
 # ===== Welcome and rules
@@ -75,8 +75,8 @@ print("In this game, each player draws a card, the cards are compared and the wi
 print("In total, 15 hands are drawn.")
 print("The player with the most cards at the end wins.")
 print()
-add_player_flag = input("Press 1 to add a new player. Press enter to log in. ")
-if add_player_flag:
+addPlayerFlag = input("Press 1 to add a new player. Press enter to log in. ")
+if addPlayerFlag:
     add_player()
 print()
 
@@ -113,8 +113,8 @@ with open("deck.txt") as f:
 random.shuffle(deck)
 
 # Initialises player's card stacks as empty
-p1_cards = []
-p2_cards = []
+p1Cards = []
+p2Cards = []
 
 input("Let's begin the game!")
 print()
@@ -145,9 +145,9 @@ while len(deck) > 0:
         p2Number = int(p2ActiveCard.split(" ")[1])
 
         if p1Number > p2Number:
-            win_hand(p1_cards, p1Name)
+            win_hand(p1Cards, p1Name)
         else:
-            win_hand(p2_cards, p2Name)
+            win_hand(p2Cards, p2Name)
 
     # If colours are different, call function
     else:
@@ -159,14 +159,14 @@ print("All cards have been drawn!")
 input("The winner is...")
 print()
 
-if len(p1_cards) > len(p2_cards):
+if len(p1Cards) > len(p2Cards):
     winner = p1Name
-    winNum = len(p1_cards)
-    win_cards = p1_cards
+    winNum = len(p1Cards)
+    win_cards = p1Cards
 else:
     winner = p2Name
-    winNum = len(p2_cards)
-    win_cards = p2_cards
+    winNum = len(p2Cards)
+    win_cards = p2Cards
 
 print(f"{winner}! With {winNum} cards!")
 print()
