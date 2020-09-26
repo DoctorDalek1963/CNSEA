@@ -172,8 +172,8 @@ print()
 input("They had these cards:")
 print()
 
-for i in win_cards:
-    print(i.colour, i.number)
+for card in win_cards:
+    print(card.colour, card.number)
 
 print()
 
