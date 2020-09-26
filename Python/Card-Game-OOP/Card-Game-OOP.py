@@ -119,8 +119,8 @@ authenticate(p2Name, p2Pass)
 
 # ===== The Game
 
-deckList = []
 # Create list of all cards as Card objects
+deckList = []
 with open("deck.csv") as f:
     for i, line in enumerate(f.read().splitlines()):
         deckList.append(Card(line.split(",")[0], int(line.split(",")[1])))
@@ -180,8 +180,8 @@ print()
 with open("scores.csv", "a") as f:
     f.write(f"{winner},{winNum}\n")
 
-scoresList = []
 # Create list of all scores as Score objects
+scoresList = []
 with open("scores.csv") as f:
     for i, line in enumerate(f.read().splitlines()):
         scoresList.append(Score(line.split(",")[0], int(line.split(",")[1])))
