@@ -1,18 +1,27 @@
 from random import shuffle
 
 
-def authenticate(name, password):
-    """Authenticate player names and passwords."""
-    # Formats player details correctly
+class Card:
+    def __init__(self, colour: str, number: int):
+        self.colour = colour
+        self.number = number
+
+
+class Score:
+    def __init__(self, name: str, number: int):
+        self.name = name
+        self.number = number
+
+
+def authenticate(name: str, password: str):
+    """Authenticate players."""
     details = name + "," + password
     match = False
 
-    # Searches player_list for details. If found, make match = 1
     for x in player_list:
         if x == details:
             match = True
 
-    # If no match was found
     if not match:
         print()
         print(f"Sorry, {name}, your username or password was incorrect.")
@@ -39,33 +48,40 @@ def add_player():
     print()
 
 
-def win_hand(card_list, player):
+def win_hand(player_name: str, card_list: list):
     """Append cards to winner's stack and report win."""
     # Appends both cards to the winner's card stack
     card_list.append(p1ActiveCard)
     card_list.append(p2ActiveCard)
-    print(f"{player} won that hand!")
+    print(f"{player_name} won that hand!")
     print()
     input("Press enter to continue")
     print()
 
 
 colourDict = {
-    'Red Black' or 'Black Red': 'Red',
-    'Yellow Red' or 'Red Yellow': 'Yellow',
-    'Black Yellow' or 'Yellow Black': 'Black'
+    'Red,Black' or 'Black,Red': 'Red',
+    'Yellow,Red' or 'Red,Yellow': 'Yellow',
+    'Black,Yellow' or 'Yellow,Black': 'Black'
 }
 
 
-def colour_compare(colour1, colour2):
-    """Compare colours and declare winner."""
-    colour = f"{colour1} {colour2}"
-    # Compares concatenated colour string with dictionary to get winning colour
-    colour_win = colourDict.get(colour)
-    if colour_win == colour1:
-        win_hand(p1Cards, p1Name)
+def compare(card1: Card, card2: Card):
+    """Compare cards to find winner of hand."""
+    if card1.colour == card2.colour:
+        if card1.number > card2.number:
+            win_hand(p1Name, p1Cards)
+        else:
+            win_hand(p2Name, p2Cards)
+
+        return
+
+    colour = card1.colour + "," + card2.colour
+    win_colour = colourDict.get(colour)
+    if win_colour == card1.colour:
+        win_hand(p1Name, p1Cards)
     else:
-        win_hand(p2Cards, p2Name)
+        win_hand(p2Name, p2Cards)
 
 
 # ===== Welcome & Rules
@@ -76,11 +92,9 @@ print("In total, 15 hands are drawn.")
 print("The player with the most cards at the end wins.")
 print()
 addPlayerFlag = input("Press 1 to add a new player. Press enter to log in. ")
-if addPlayerFlag:
+if addPlayerFlag == 1:
     add_player()
 print()
-
-# === Authentication system
 
 # Gets file of player details as a list
 with open("player_list.csv") as f:
@@ -103,14 +117,15 @@ if p2Name == p1Name:
 
 authenticate(p2Name, p2Pass)
 
-
 # ===== The Game
 
-# Get deck as a list as ["colour number", ...]
-with open("deck.txt") as f:
-    deck = f.read().splitlines()
+deckList = []
+# Create list of all cards as Card objects
+with open("deck.csv") as f:
+    for i, line in enumerate(f.read().splitlines()):
+        deckList.append(Card(line.split(",")[0], int(line.split(",")[1])))
 
-shuffle(deck)
+shuffle(deckList)
 
 # Initialises player's card stacks as empty
 p1Cards = []
@@ -122,37 +137,20 @@ print()
 
 handNum = 1
 
-# Loop until deck is empty
-while len(deck) > 0:
+while len(deckList) > 0:
     print(f"Hand: {handNum}")
-    # Both players take the top card
-    p1ActiveCard = deck[0]
-    del deck[0]
-    p2ActiveCard = deck[0]
-    del deck[0]
+    p1ActiveCard = deckList[0]
+    del deckList[0]
+    p2ActiveCard = deckList[0]
+    del deckList[0]
 
-    print(f"{p1Name} drew a {p1ActiveCard}")
-    print(f"{p2Name} drew a {p2ActiveCard}")
+    print(f"{p1Name} drew a", p1ActiveCard.colour, p1ActiveCard.number)
+    print(f"{p2Name} drew a", p2ActiveCard.colour, p2ActiveCard.number)
     print()
     input("Press enter to continue")
     print()
 
-    p1Colour = p1ActiveCard.split(" ")[0]
-    p2Colour = p2ActiveCard.split(" ")[0]
-
-    # If colours are the same, largest number wins
-    if p1Colour == p2Colour:
-        p1Number = int(p1ActiveCard.split(" ")[1])
-        p2Number = int(p2ActiveCard.split(" ")[1])
-
-        if p1Number > p2Number:
-            win_hand(p1Cards, p1Name)
-        else:
-            win_hand(p2Cards, p2Name)
-
-    # If colours are different, call function
-    else:
-        colour_compare(p1Colour, p2Colour)
+    compare(p1ActiveCard, p2ActiveCard)
 
     handNum = handNum + 1
 
@@ -171,34 +169,33 @@ else:
 
 print(f"{winner}! With {winNum} cards!")
 print()
-
 input("They had these cards:")
 print()
 
 for i in win_cards:
-    print(i)
+    print(i.colour, i.number)
 
 print()
 
-# Append score & player to scores.txt
-with open("scores.txt", "a") as f:
-    f.write(f"{winNum} {winner}\n")
+with open("scores.csv", "a") as f:
+    f.write(f"{winner},{winNum}\n")
 
-numLines = len(open("scores.txt").readlines())
+scoresList = []
+# Create list of all scores as Score objects
+with open("scores.csv") as f:
+    for i, line in enumerate(f.read().splitlines()):
+        scoresList.append(Score(line.split(",")[0], int(line.split(",")[1])))
 
-if numLines < 5:
-    print("There are not enough high scores to display them.")
-else:
-    # Get scores.txt as list called scores_all[] in the form ["score name", ...]
-    with open("scores.txt") as f:
-        scores_all = f.read().splitlines()
+scoresList.sort(key=lambda x: x.number, reverse=True)
 
-    scores_high = sorted(scores_all, reverse=True)  # Sort scores_high
+input("These are the high scores:")
+print()
 
-    input("These are the high scores:")
-    print()
-    for i in range(5):
-        print(scores_high[i])
+for i, s in enumerate(scoresList):
+    if i < 5:
+        print(s.name, "-", s.number)
+    else:
+        break  # Stops loop after 5 scores
 
 print()
 input("Press enter to finish")
