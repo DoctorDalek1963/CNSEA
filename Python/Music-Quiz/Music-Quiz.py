@@ -4,6 +4,21 @@ class Score:
         self.number = number
 
 
+class Song:
+    def __init__(self, song_name: str, artist_name: str):
+        self.song_name = song_name
+        self.artist_name = artist_name
+
+    def first_letters(self):
+        """Get first letters of every word in song_name and capitalise them."""
+
+        # Split by " " to get list of words
+        # Then take the 0th index of each word string and capitalise it
+        letters = "".join(word[0].upper() for word in self.song_name.split())
+
+        return letters
+
+
 def authenticate(name: str, password: str):
     """Authenticate players."""
     details = name + "," + password
