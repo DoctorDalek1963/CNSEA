@@ -139,10 +139,8 @@ with open("scores.csv", "a") as f:
     f.write(f"{winner},{winNum}\n")
 
 # Create list of all scores as Score objects
-scoresList = []
 with open("scores.csv") as f:
-    for i, line in enumerate(f.read().splitlines()):
-        scoresList.append(Score(line.split(",")[0], int(line.split(",")[1])))
+    scoresList = [Score(line.split(",")[0], int(line.split(",")[1])) for line in f.read().splitlines()]
 
 scoresList.sort(key=lambda x: x.number, reverse=True)
 
