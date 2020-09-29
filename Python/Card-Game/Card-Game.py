@@ -76,7 +76,7 @@ print("In total, 15 hands are drawn.")
 print("The player with the most cards at the end wins.")
 print()
 addPlayerFlag = input("Press 1 to add a new player. Press enter to log in. ")
-if addPlayerFlag:
+if addPlayerFlag == 1:
     add_player()
 print()
 
