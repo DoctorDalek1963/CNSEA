@@ -7,6 +7,11 @@ class Score:
         self.number = number
 
 
+# Gets file of player details as a list
+with open("player_list.csv") as f:
+    player_list = f.read().splitlines()
+
+
 def authenticate(name: str, password: str):
     """Authenticate players."""
     details = name + "," + password
@@ -83,10 +88,6 @@ addPlayerFlag = input("Press 1 to add a player. Press enter to log in.")
 if addPlayerFlag == 1:
     add_player()
 print()
-
-# Gets file of player details as a list
-with open("player_list.csv") as f:
-    player_list = f.read().splitlines()
 
 # Authenticate players
 p1Name = input("Player 1 please enter your name: ")

@@ -25,6 +25,10 @@ class Song:
 with open("songs.csv") as f:
     songsList = [Song(line.split(",")[0], line.split(",")[1], line.split(",")[2]) for line in f.read().splitlines()]
 
+# Gets file of player details as a list
+with open("player_list.csv") as f:
+    player_list = f.read().splitlines()
+
 
 def authenticate(name: str, password: str):
     """Authenticate players."""
