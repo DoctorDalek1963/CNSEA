@@ -71,4 +71,30 @@ def get_random_song():
     return f"{chosen_song.first_letters()} by {chosen_song.artist_name} from {chosen_song.album_name}"
 
 
+print("Welcome to The Music Quiz!")
+print("There are 2 players. They take it in to turns to guess a song from a given hint.")
+print("The hint is the first letter of every word in the name of the song, the artist, and the album.")
+print()
+addPlayerFlag = input("Press 1 to add a player. Press enter to log in.")
+if addPlayerFlag == 1:
+    add_player()
+print()
+
+# Authenticate players
+p1Name = input("Player 1 please enter your name: ")
+p1Pass = input("And your password: ")
+
+authenticate(p1Name, p1Pass)
+
+p2Name = input("Player 2 please enter your name: ")
+p2Pass = input("And your password: ")
+
+# Check that player 2 is a different person
+if p2Name == p1Name:
+    print(f"Sorry, {p2Name}, but that's the same account as player 1.")
+    input("Press enter to exit")
+    quit()
+
+authenticate(p2Name, p2Pass)
+
 #
