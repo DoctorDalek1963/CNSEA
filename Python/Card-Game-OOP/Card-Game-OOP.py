@@ -7,6 +7,12 @@ class Card:
         self.number = number
 
 
+# Create list of all cards as Card objects
+with open("deck.csv") as f:
+    deckList = [Card(line.split(",")[0], int(line.split(",")[1])) for line in f.read().splitlines()]
+shuffle(deckList)
+
+
 class Score:
     def __init__(self, name: str, number: int):
         self.name = name
@@ -118,14 +124,6 @@ if p2Name == p1Name:
 authenticate(p2Name, p2Pass)
 
 # ===== The Game
-
-# Create list of all cards as Card objects
-deckList = []
-with open("deck.csv") as f:
-    for i, line in enumerate(f.read().splitlines()):
-        deckList.append(Card(line.split(",")[0], int(line.split(",")[1])))
-
-shuffle(deckList)
 
 # Initialises player's card stacks as empty
 p1Cards = []

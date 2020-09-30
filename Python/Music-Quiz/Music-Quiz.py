@@ -1,3 +1,6 @@
+from random import choice
+
+
 class Score:
     def __init__(self, name: str, number: int):
         self.name = name
@@ -5,18 +8,22 @@ class Score:
 
 
 class Song:
-    def __init__(self, song_name: str, artist_name: str):
+    def __init__(self, song_name: str, artist_name: str, album_name: str):
         self.song_name = song_name
         self.artist_name = artist_name
+        self.album_name = album_name
 
     def first_letters(self):
         """Get first letters of every word in song_name and capitalise them."""
 
         # Split by " " to get list of words
         # Then take the 0th index of each word string and capitalise it
-        letters = "".join(word[0].upper() for word in self.song_name.split())
+        return "".join(word[0].upper() for word in self.song_name.split())
 
-        return letters
+
+# Create list of all songs as Song objects
+with open("songs.csv") as f:
+    songsList = [Song(line.split(",")[0], line.split(",")[1], line.split(",")[2]) for line in f.read().splitlines()]
 
 
 def authenticate(name: str, password: str):
@@ -52,6 +59,12 @@ def add_player():
     print()
     print(f"{name} added!")
     print()
+
+
+def get_random_song():
+    """Get a random song and return a formatted string to be guessed."""
+    chosen_song = choice(songsList)
+    return f"{chosen_song.first_letters()} by {chosen_song.artist_name} from {chosen_song.album_name}"
 
 
 #
