@@ -2,8 +2,8 @@ from random import choice
 
 
 class Score:
-    def __init__(self, name: str, number: int):
-        self.name = name
+    def __init__(self, player_name: str, number: int):
+        self.name = player_name
         self.number = number
 
 
@@ -15,7 +15,6 @@ class Song:
 
     def first_letters(self):
         """Get first letters of every word in song_name and capitalise them."""
-
         # Split by " " to get list of words
         # Then take the 0th index of each word string and capitalise it
         return "".join(word[0].upper() for word in self.song_name.split())
@@ -23,16 +22,17 @@ class Song:
 
 # Create list of all songs as Song objects
 with open("songs.csv") as f:
-    songsList = [Song(line.split(",")[0], line.split(",")[1], line.split(",")[2]) for line in f.read().splitlines()]
+    songsList = [Song(line.split(",")[0], line.split(",")[1],
+                      line.split(",")[2]) for line in f.read().splitlines()]
 
 # Gets file of player details as a list
 with open("player_list.csv") as f:
     player_list = f.read().splitlines()
 
 
-def authenticate(name: str, password: str):
+def authenticate(param_name: str, password: str):
     """Authenticate players."""
-    details = name + "," + password
+    details = param_name + "," + password
     match = False
 
     for x in player_list:
@@ -41,34 +41,34 @@ def authenticate(name: str, password: str):
 
     if not match:
         print()
-        print(f"Sorry, {name}, your username or password was incorrect.")
+        print(f"Sorry, {param_name}, your username or password was incorrect.")
         input("Press enter to exit")
         quit()
 
     print()
-    print(f"Welcome, {name}!")
+    print(f"Welcome, {param_name}!")
     print()
 
 
 def add_player():
     """Add new name and password to player_list."""
     print()
-    name = input("Please enter the name of the new player: ")
+    param_name = input("Please enter the name of the new player: ")
     password = input("Please enter the password: ")
 
-    new_data = f"{name},{password}\n"
+    new_data = f"{param_name},{password}\n"
     with open("player_list.csv", "a") as file:
         file.write(new_data)
 
     print()
-    print(f"{name} added!")
+    print(f"{param_name} added!")
     print()
 
 
-def get_random_song():
-    """Get a random song and return a formatted string to be guessed."""
-    chosen_song = choice(songsList)
-    return f"{chosen_song.first_letters()} by {chosen_song.artist_name} from {chosen_song.album_name}"
+# def get_random_song():
+#     """Get a random song and return a formatted string to be guessed."""
+#     chosen_song = choice(songsList)
+#     return f"{chosen_song.first_letters()} by {chosen_song.artist_name} from {chosen_song.album_name}"
 
 
 print("Welcome to The Music Quiz!")
@@ -96,5 +96,28 @@ if p2Name == p1Name:
     quit()
 
 authenticate(p2Name, p2Pass)
+
+endFlag = False
+activePlayer = 1
+p1Score = p2Score = score = 0
+name = ""
+
+while not endFlag:
+
+    if activePlayer == 1:
+        name = p1Name
+        score = p1Score
+        activePlayer = 2
+
+    elif activePlayer == 2:
+        name = p2Name
+        score = p2Score
+        activePlayer = 1
+
+    print(f"{name}, you will be given a song. You must guess it.")
+    randomSong = choice(songsList)
+    print(f"{randomSong.first_letters()} by {randomSong.artist_name} from {randomSong.album_name}")
+    print()
+    guess = input()
 
 #
