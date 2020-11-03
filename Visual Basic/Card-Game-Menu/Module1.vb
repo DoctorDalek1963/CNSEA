@@ -187,18 +187,8 @@
     End Sub
     Sub Game()
 
-        Dim deck(29) As String
+        Dim deck() As String = System.IO.File.ReadAllLines("deck.txt")
         Dim count As Integer = 0
-
-        FileOpen(1, "deck.txt", OpenMode.Input)
-
-        While Not EOF(1)
-            ' Add each line of deck.txt to deck()
-            deck(count) = LineInput(1)
-            count += 1
-        End While
-
-        FileClose(1)
 
         Randomize() ' Initialise random
 
