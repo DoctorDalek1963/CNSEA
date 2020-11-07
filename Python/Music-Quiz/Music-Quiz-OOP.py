@@ -1,4 +1,5 @@
-from random import choice
+# from random import choice
+import random
 
 
 class Score:
@@ -115,7 +116,7 @@ while not endFlag:
         activePlayer = 1
 
     print(f"{name}, you will be given a song. You must guess it.")
-    randomSong = choice(songsList)
+    randomSong = random.choice(songsList)
     print(f"{randomSong.first_letters()} by {randomSong.artist_name} from {randomSong.album_name}")
     print()
     guess = input()
