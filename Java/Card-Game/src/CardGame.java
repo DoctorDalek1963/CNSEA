@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -66,17 +65,27 @@ public class CardGame {
     public static void addPlayer() {
         Scanner inputScanner = new Scanner(System.in);
 
+        System.out.println();
         System.out.print("Please enter the name of the new player: ");
         String name = inputScanner.nextLine();
         System.out.print("Please enter the password: ");
         String password = inputScanner.nextLine();
 
-        String newPlayer = name + "," + password + "\n";
+        String newPlayer = name + "," + password;
 
-        File playerList = new File("player_list.csv");
+        try {
+            FileWriter fileWriter = new FileWriter("player_list.csv", true); // True enables append mode
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.println(newPlayer);
+            printWriter.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
         System.out.println();
-
+        System.out.println("Press enter to log in.");
+        inputScanner.nextLine();
     }
 
     public static void main(String[] args) {
@@ -85,8 +94,13 @@ public class CardGame {
         System.out.println("Welcome to The Card Game!");
         System.out.println("In this game, each player draws a card, the cards are compared and the winner takes both cards.");
         System.out.println();
-        System.out.println("Press enter to continue");
-        inputScanner.nextLine();
+        System.out.println("Press 1 to add a new player. Press enter to log in.");
+
+        if (inputScanner.hasNextLine()) {
+            if (inputScanner.nextLine().equals("1")) {
+                addPlayer();
+            }
+        }
 
         System.out.print("Player 1, please enter your username: ");
         String p1Name = inputScanner.nextLine();
