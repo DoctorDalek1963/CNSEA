@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
 
 class Card {
     String colour;
@@ -42,7 +39,8 @@ public class CardGame {
     static ArrayList<Card> p1Cards = new ArrayList<>();
     static ArrayList<Card> p2Cards = new ArrayList<>();
 
-    static Scanner inputScanner = new Scanner(System.in); // Create scanner object to read input
+    // Create scanner object to read input
+    static Scanner inputScanner = new Scanner(System.in);
 
 
     public static void authenticate(String name, String password) {
