@@ -2,8 +2,8 @@ import java.io.*;
 import java.util.*;
 
 class Card {
-    String colour;
-    int number;
+    private final String colour;
+    private final int number;
 
     Card(String colour, int number) {
         this.colour = colour;
@@ -16,8 +16,8 @@ class Card {
 }
 
 class Score {
-    String name;
-    int number;
+    private final String name;
+    private final int number;
 
     Score(String name, int number) {
         this.name = name;
