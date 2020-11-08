@@ -1,5 +1,6 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 class Card {
@@ -9,6 +10,13 @@ class Card {
     Card(String colour, int number) {
         this.colour = colour;
         this.number = number;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+    public int getNumber() {
+        return number;
     }
 }
 
@@ -24,9 +32,19 @@ class Card {
 
 public class CardGame {
 
-    public static void authenticate(String name, String password) {
-        Scanner inputScanner = new Scanner(System.in);
+    static String p1Name;
+    static String p2Name;
 
+    static Card p1ActiveCard;
+    static Card p2ActiveCard;
+
+    static Card[] p1Cards;
+    static Card[] p2Cards;
+
+
+    static Scanner inputScanner = new Scanner(System.in); // Create scanner object to read input
+
+    public static void authenticate(String name, String password) {
         String playerDetails = name + "," + password;
         boolean match = false;
 
@@ -63,8 +81,6 @@ public class CardGame {
     }
 
     public static void addPlayer() {
-        Scanner inputScanner = new Scanner(System.in);
-
         System.out.println();
         System.out.print("Please enter the name of the new player: ");
         String name = inputScanner.nextLine();
@@ -88,9 +104,51 @@ public class CardGame {
         inputScanner.nextLine();
     }
 
-    public static void main(String[] args) {
-        Scanner inputScanner = new Scanner(System.in); // Create scanner object to read input
+    public static void winHand(String name, Card[] cardStack) {
+        // TODO: Add active cards to cardStack
 
+        System.out.println(name + " won that hand!");
+        System.out.println();
+        System.out.println("Press enter to continue.");
+        inputScanner.nextLine();
+        System.out.println();
+    }
+
+    public static void compare(Card card1, Card card2) {
+        if (card1.getColour().equals(card2.getColour())) {
+            if (card1.getNumber() > card2.getNumber()) {
+                winHand(p1Name, p1Cards);
+
+            } else {
+                winHand(p2Name, p2Cards);
+            }
+        } else {
+            String colour = card1.getColour() + " " + card2.getColour();
+            String winColour = "";
+
+            if (colour.equals("Red Black") | colour.equals("Black Red")) {
+                winColour = "Red";
+
+            } else if (colour.equals("Yellow Red") | colour.equals("Red Yellow")) {
+                winColour = "Yellow";
+
+            } else if (colour.equals("Black Yellow") | colour.equals("Yellow Black")) {
+                winColour = "Black";
+            }
+
+            if (winColour.equals(card1.getColour())) {
+                winHand(p1Name, p1Cards);
+
+            } else if (winColour.equals(card2.getColour())) {
+                winHand(p2Name, p2Cards);
+
+            } else {
+                System.out.println("Unhandled winColour exception in CardGame.compare()");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
         System.out.println("Welcome to The Card Game!");
         System.out.println("In this game, each player draws a card, the cards are compared and the winner takes both cards.");
         System.out.println();
@@ -103,7 +161,7 @@ public class CardGame {
         }
 
         System.out.print("Player 1, please enter your username: ");
-        String p1Name = inputScanner.nextLine();
+        p1Name = inputScanner.nextLine();
 
         System.out.print("Player 1, please enter your password: ");
         String p1Pass = inputScanner.nextLine();
@@ -111,7 +169,7 @@ public class CardGame {
         authenticate(p1Name, p1Pass);
 
         System.out.print("Player 2, please enter your username: ");
-        String p2Name = inputScanner.nextLine();
+        p2Name = inputScanner.nextLine();
 
         System.out.print("Player 2, please enter your password: ");
         String p2Pass = inputScanner.nextLine();
@@ -143,7 +201,60 @@ public class CardGame {
             e.printStackTrace();
         }
 
-        System.out.println(Arrays.toString(deck));
+        System.out.println("Press enter to start.");
+        inputScanner.nextLine();
+        System.out.println("Let's begin the game!");
+        System.out.println();
+        
+        int handNum = 1;
+
+        for (int i = 0; i < 15; i++) {
+            System.out.println("Hand: " + handNum);
+            p1ActiveCard = deck[i];
+            p2ActiveCard = deck[i + 1];
+
+            System.out.println(p1Name + " drew a " + p1ActiveCard.getColour() + " " + p1ActiveCard.getNumber());
+            System.out.println(p2Name + " drew a " + p2ActiveCard.getColour() + " " + p2ActiveCard.getNumber());
+            System.out.println();
+            System.out.println("Press enter to continue.");
+            System.out.println();
+            inputScanner.nextLine();
+
+            compare(p1ActiveCard, p2ActiveCard);
+
+            handNum++;
+        }
+
+        System.out.println("All cards have been drawn!");
+        System.out.println("The winner is...");
+        System.out.println();
+
+        String winner;
+        int winNum;
+        Card[] winCards;
+
+        if (p1Cards.length > p2Cards.length) {
+            winner = p1Name;
+            winNum = p1Cards.length;
+            winCards = p1Cards;
+        } else {
+            winner = p2Name;
+            winNum = p2Cards.length;
+            winCards = p2Cards;
+        }
+
+        System.out.println(winner + "! With " + winNum + " cards!");
+        System.out.println();
+        System.out.println("They had these cards:");
+        System.out.println();
+
+        for (Card card : winCards) {
+            System.out.println(card);
+        }
+
+        System.out.println();
+
+        // TODO: Handle scores
     }
 
 }
