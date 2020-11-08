@@ -1,7 +1,8 @@
-import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 class Card {
     String colour;
@@ -12,23 +13,23 @@ class Card {
         this.number = number;
     }
 
-    public String getColour() {
-        return colour;
-    }
-    public int getNumber() {
-        return number;
-    }
+    public String getColour() { return colour; }
+    public int getNumber() { return number; }
+    public String displayName() { return this.colour + " " + this.number; }
 }
 
-//class Score {
-//    String name;
-//    int number;
-//
-//    Score(String name, int number) {
-//        this.name = name;
-//        this.number = number;
-//    }
-//}
+class Score {
+    String name;
+    int number;
+
+    Score(String name, int number) {
+        this.name = name;
+        this.number = number;
+    }
+
+    public int getNumber() { return number; }
+    public String displayName() { return this.name + " - " + this.number; }
+}
 
 public class CardGame {
 
@@ -38,11 +39,11 @@ public class CardGame {
     static Card p1ActiveCard;
     static Card p2ActiveCard;
 
-    static Card[] p1Cards;
-    static Card[] p2Cards;
-
+    static ArrayList<Card> p1Cards = new ArrayList<>();
+    static ArrayList<Card> p2Cards = new ArrayList<>();
 
     static Scanner inputScanner = new Scanner(System.in); // Create scanner object to read input
+
 
     public static void authenticate(String name, String password) {
         String playerDetails = name + "," + password;
@@ -62,6 +63,7 @@ public class CardGame {
             }
         }
         catch (FileNotFoundException e) {
+            System.out.println("player_list.csv not found.");
             e.printStackTrace();
         }
 
@@ -90,12 +92,13 @@ public class CardGame {
         String newPlayer = name + "," + password;
 
         try {
-            FileWriter fileWriter = new FileWriter("player_list.csv", true); // True enables append mode
-            PrintWriter printWriter = new PrintWriter(fileWriter);
+            // True enables append mode
+            PrintWriter printWriter = new PrintWriter(new FileWriter("player_list.csv", true));
             printWriter.println(newPlayer);
             printWriter.close();
         }
         catch (IOException e) {
+            System.out.println("Failed to write to player_list.csv.");
             e.printStackTrace();
         }
 
@@ -104,14 +107,14 @@ public class CardGame {
         inputScanner.nextLine();
     }
 
-    public static void winHand(String name, Card[] cardStack) {
-        // TODO: Add active cards to cardStack
+    public static void winHand(String name, ArrayList<Card> cardStack) {
+        cardStack.add(p1ActiveCard);
+        cardStack.add(p2ActiveCard);
 
         System.out.println(name + " won that hand!");
         System.out.println();
         System.out.println("Press enter to continue.");
         inputScanner.nextLine();
-        System.out.println();
     }
 
     public static void compare(Card card1, Card card2) {
@@ -147,6 +150,7 @@ public class CardGame {
             }
         }
     }
+
 
     public static void main(String[] args) {
         System.out.println("Welcome to The Card Game!");
@@ -184,31 +188,33 @@ public class CardGame {
 
         authenticate(p2Name, p2Pass);
 
-        Card[] deck = new Card[30]; // Array of 30 Card objects called deck
+        ArrayList<Card> deckList = new ArrayList<>();
 
         try {
             File deckFile = new File("deck.csv");
             Scanner deckScanner = new Scanner(deckFile);
-            int count = 0;
 
             while (deckScanner.hasNextLine()) {
                 String line = deckScanner.nextLine();
-                deck[count] = new Card(line.split(",")[0], Integer.parseInt(line.split(",")[1]));
-                count++;
+                deckList.add(new Card(line.split(",")[0], Integer.parseInt(line.split(",")[1])));
             }
         }
         catch (FileNotFoundException e) {
+            System.out.println("deck.csv not found.");
             e.printStackTrace();
         }
+
+        Collections.shuffle(deckList);
+        Card[] deck = deckList.toArray(new Card[0]);
 
         System.out.println("Press enter to start.");
         inputScanner.nextLine();
         System.out.println("Let's begin the game!");
-        System.out.println();
-        
+        inputScanner.nextLine();
+
         int handNum = 1;
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < deck.length; i = i + 2) {
             System.out.println("Hand: " + handNum);
             p1ActiveCard = deck[i];
             p2ActiveCard = deck[i + 1];
@@ -217,7 +223,6 @@ public class CardGame {
             System.out.println(p2Name + " drew a " + p2ActiveCard.getColour() + " " + p2ActiveCard.getNumber());
             System.out.println();
             System.out.println("Press enter to continue.");
-            System.out.println();
             inputScanner.nextLine();
 
             compare(p1ActiveCard, p2ActiveCard);
@@ -227,34 +232,83 @@ public class CardGame {
 
         System.out.println("All cards have been drawn!");
         System.out.println("The winner is...");
-        System.out.println();
+        inputScanner.nextLine();
 
         String winner;
         int winNum;
-        Card[] winCards;
+        ArrayList<Card> winCards;
 
-        if (p1Cards.length > p2Cards.length) {
+        if (p1Cards.size() > p2Cards.size()) {
             winner = p1Name;
-            winNum = p1Cards.length;
+            winNum = p1Cards.size();
             winCards = p1Cards;
         } else {
             winner = p2Name;
-            winNum = p2Cards.length;
+            winNum = p2Cards.size();
             winCards = p2Cards;
         }
+
+        String winScore = winner + "," + winNum;
 
         System.out.println(winner + "! With " + winNum + " cards!");
         System.out.println();
         System.out.println("They had these cards:");
-        System.out.println();
+        inputScanner.nextLine();
 
         for (Card card : winCards) {
-            System.out.println(card);
+            System.out.println(card.displayName());
         }
 
         System.out.println();
 
-        // TODO: Handle scores
+        try {
+            // True enables append mode
+            PrintWriter printWriter = new PrintWriter(new FileWriter("scores.csv", true));
+            printWriter.println(winScore);
+            printWriter.close();
+        }
+        catch (IOException e) {
+            System.out.println("Failed to write to player_list.csv.");
+            e.printStackTrace();
+        }
+
+        ArrayList<Score> scoresList = new ArrayList<>();
+
+        try {
+            File scoreFile = new File("scores.csv");
+            Scanner scoreScanner = new Scanner(scoreFile);
+
+            while (scoreScanner.hasNextLine()) {
+                String line = scoreScanner.nextLine();
+                scoresList.add(new Score(line.split(",")[0], Integer.parseInt(line.split(",")[1])));
+            }
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("scores.csv not found.");
+            e.printStackTrace();
+        }
+
+        // Sort scoresList by number
+        scoresList.sort(Comparator.comparing(Score::getNumber));
+        Collections.reverse(scoresList);
+        Score[] scores = scoresList.toArray(new Score[0]);
+
+        System.out.println("These are the high scores:");
+        inputScanner.nextLine();
+
+        if (scores.length >= 5) {
+            for (int i = 0; i < 5; i++) {
+                System.out.println(scores[i].displayName());
+            }
+        } else {
+            System.out.println("There are not enough scores to display.");
+        }
+
+        System.out.println();
+        System.out.println("Press enter to finish.");
+        inputScanner.nextLine();
+        System.out.println("Thank you, " + p1Name + " and " + p2Name + ", for playing The Card Game!");
+        inputScanner.nextLine();
     }
 
 }
