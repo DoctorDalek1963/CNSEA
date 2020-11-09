@@ -19,12 +19,7 @@ class Score:
         return self.name + " - " + str(self.number)
 
 
-# Create list of all cards as Card objects
-with open("deck.csv") as f:
-    deckList = [Card(line.split(",")[0], int(line.split(",")[1])) for line in f.read().splitlines()]
-shuffle(deckList)
-
-# Gets file of player details as a list
+# Gets file of player details as a list for authenticate()
 with open("player_list.csv") as f:
     player_list = f.read().splitlines()
 
@@ -138,6 +133,12 @@ p2Cards = []
 input("Press enter to start")
 print("Let's begin the game!")
 print()
+
+# Create list of all cards as Card objects
+with open("deck.csv") as f:
+    deckList = [Card(line.split(",")[0], int(line.split(",")[1])) for line in f.read().splitlines()]
+
+shuffle(deckList)
 
 handNum = 1
 
