@@ -6,11 +6,8 @@ class Card:
         self.colour = colour
         self.number = number
 
-
-# Create list of all cards as Card objects
-with open("deck.csv") as f:
-    deckList = [Card(line.split(",")[0], int(line.split(",")[1])) for line in f.read().splitlines()]
-shuffle(deckList)
+    def __repr__(self):
+        return self.colour + " " + str(self.number)
 
 
 class Score:
@@ -18,6 +15,14 @@ class Score:
         self.name = name
         self.number = number
 
+    def __repr__(self):
+        return self.name + " - " + str(self.number)
+
+
+# Create list of all cards as Card objects
+with open("deck.csv") as f:
+    deckList = [Card(line.split(",")[0], int(line.split(",")[1])) for line in f.read().splitlines()]
+shuffle(deckList)
 
 # Gets file of player details as a list
 with open("player_list.csv") as f:
@@ -143,8 +148,8 @@ while len(deckList) > 0:
     p2ActiveCard = deckList[0]
     del deckList[0]
 
-    print(f"{p1Name} drew a", p1ActiveCard.colour, p1ActiveCard.number)
-    print(f"{p2Name} drew a", p2ActiveCard.colour, p2ActiveCard.number)
+    print(f"{p1Name} drew a {p1ActiveCard}")
+    print(f"{p2Name} drew a {p2ActiveCard}")
     print()
     input("Press enter to continue")
     print()
@@ -172,7 +177,7 @@ input("They had these cards:")
 print()
 
 for card in win_cards:
-    print(card.colour, card.number)
+    print(card)
 
 print()
 
@@ -188,9 +193,9 @@ scoresList.sort(key=lambda x: x.number, reverse=True)
 input("These are the high scores:")
 print()
 
-for i, s in enumerate(scoresList):
+for i, score in enumerate(scoresList):
     if i < 5:
-        print(s.name, "-", s.number)
+        print(score)
     else:
         break  # Stops loop after 5 scores
 
