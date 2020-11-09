@@ -9,4 +9,4 @@ My Computer Science Non-Exam Assessment (CSNEA).
 Included are:
 - The Python versions of Tasks 1 (incomplete), 2, and 3 in two forms
 - The Visual Basic version of task 3 in two forms
-- The Java version of task 3 (incomplete)
+- The Java version of task 3
