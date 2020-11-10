@@ -45,7 +45,7 @@ def authenticate(name: str, password: str):
 
 
 def add_player():
-    """Add new name and password to player_list."""
+    """Add new name and password to player_list.csv."""
     print()
     name = input("Please enter the name of the new player: ")
     password = input("Please enter the password: ")
