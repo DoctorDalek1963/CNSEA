@@ -302,18 +302,18 @@ public class CardGame {
         // Sort scoresList by number
         scoresList.sort(Comparator.comparing(Score::getNumber));
         Collections.reverse(scoresList);
-        Score[] scores = scoresList.toArray(new Score[0]);
+        Score[] scoresArray = scoresList.toArray(new Score[0]);
 
         System.out.println("These are the high scores:");
         inputScanner.nextLine();
 
-        // Print top 5 high scores if available
-        if (scores.length >= 5) {
-            for (int i = 0; i < 5; i++) {
-                System.out.println(scores[i].displayName());
+        // Print top 5 high scores (or the top n if there's less than 5 available)
+        for (int i = 0; i < 5; i++) {
+            try {
+                System.out.println(scoresArray[i].displayName());
+            } catch (IndexOutOfBoundsException e) {
+                break;
             }
-        } else {
-            System.out.println("There are not enough scores to display.");
         }
 
         System.out.println();
