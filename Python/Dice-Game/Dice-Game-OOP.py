@@ -148,11 +148,11 @@ scoresList.sort(key=lambda x: x.number, reverse=True)
 input("These are the high scores:")
 print()
 
-for i, s in enumerate(scoresList):
-    if i < 5:
-        print(s.name, "-", s.number)
-    else:
-        break  # Stops loop after 5 scores
+for i in range(5):
+    try:
+        print(scoresList[i])
+    except IndexError:
+        break  # Stops loop if IndexError occurs
 
 print()
 input("Press enter to finish")
