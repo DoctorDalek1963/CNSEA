@@ -50,6 +50,3 @@ def add_player():
     print()
     print(f"{name} added!")
     print()
-
-
-#
