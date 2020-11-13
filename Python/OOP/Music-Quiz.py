@@ -1,11 +1,5 @@
-# from random import choice
+from CSNEA_Shared import *
 import random
-
-
-class Score:
-    def __init__(self, player_name: str, number: int):
-        self.name = player_name
-        self.number = number
 
 
 class Song:
@@ -26,50 +20,22 @@ with open("songs.csv") as f:
     songsList = [Song(line.split(",")[0], line.split(",")[1],
                       line.split(",")[2]) for line in f.read().splitlines()]
 
-# Gets file of player details as a list
-with open("player_list.csv") as f:
-    player_list = f.read().splitlines()
-
-
-def authenticate(param_name: str, password: str):
-    """Authenticate players."""
-    details = param_name + "," + password
-    match = False
-
-    for x in player_list:
-        if x == details:
-            match = True
-
-    if not match:
-        print()
-        print(f"Sorry, {param_name}, your username or password was incorrect.")
-        input("Press enter to exit")
-        quit()
-
-    print()
-    print(f"Welcome, {param_name}!")
-    print()
-
-
-def add_player():
-    """Add new name and password to player_list."""
-    print()
-    param_name = input("Please enter the name of the new player: ")
-    password = input("Please enter the password: ")
-
-    new_data = f"{param_name},{password}\n"
-    with open("player_list.csv", "a") as file:
-        file.write(new_data)
-
-    print()
-    print(f"{param_name} added!")
-    print()
-
 
 # def get_random_song():
 #     """Get a random song and return a formatted string to be guessed."""
 #     chosen_song = choice(songsList)
 #     return f"{chosen_song.first_letters()} by {chosen_song.artist_name} from {chosen_song.album_name}"
+
+
+def play_round(player: str, player_score: int) -> int:
+    """Play a round of The Music Game."""
+    print(f"{player}, you will be given a song. You must guess it.")
+    random_song = random.choice(songsList)
+    print(f"{random_song.first_letters()} by {random_song.artist_name} from {random_song.album_name}")
+    print()
+    guess = input()
+
+    return player_score
 
 
 print("Welcome to The Music Quiz!")
@@ -106,19 +72,12 @@ name = ""
 while not endFlag:
 
     if activePlayer == 1:
-        name = p1Name
-        score = p1Score
+        p1Score = play_round(p1Name, p1Score)
         activePlayer = 2
 
     elif activePlayer == 2:
-        name = p2Name
-        score = p2Score
+        p2Score = play_round(p2Name, p2Score)
         activePlayer = 1
 
-    print(f"{name}, you will be given a song. You must guess it.")
-    randomSong = random.choice(songsList)
-    print(f"{randomSong.first_letters()} by {randomSong.artist_name} from {randomSong.album_name}")
-    print()
-    guess = input()
 
 #
