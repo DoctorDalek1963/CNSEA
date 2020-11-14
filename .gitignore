@@ -3,3 +3,4 @@
 **/*.vbproj.FileListAbsolute.txt
 **/__pycache__/
 *.pyc
+*.iml
