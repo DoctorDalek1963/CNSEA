@@ -133,4 +133,3 @@ public class DiceGame {
         inputScanner.nextLine();
     }
 }
-
