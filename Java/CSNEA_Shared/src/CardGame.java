@@ -203,7 +203,7 @@ public class CardGame {
 
         System.out.println();
 
-        GameMethods.writeScores("card_game_scores.csv", winScore);
+        GameMethods.writeScore("card_game_scores.csv", winScore);
 
         GameMethods.displayHighScores("card_game_scores.csv");
 

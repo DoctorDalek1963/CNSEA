@@ -66,7 +66,7 @@ public class GameMethods {
         inputScanner.nextLine();
     }
 
-    public static void writeScores(String scoreFileName, String score) {
+    public static void writeScore(String scoreFileName, String score) {
         try {
             // True enables append mode
             PrintWriter printWriter = new PrintWriter(new FileWriter(scoreFileName, true));

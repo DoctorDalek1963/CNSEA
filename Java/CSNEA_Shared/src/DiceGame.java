@@ -121,7 +121,7 @@ public class DiceGame {
 
         String winScore = winner + "," + winNum;
 
-        GameMethods.writeScores("dice_game_scores.csv", winScore);
+        GameMethods.writeScore("dice_game_scores.csv", winScore);
 
         GameMethods.displayHighScores("dice_game_scores.csv");
 
