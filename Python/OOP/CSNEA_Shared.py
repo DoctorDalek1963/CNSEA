@@ -12,6 +12,15 @@ class Score:
         return self.name + " - " + str(self.number)
 
 
+class Player:
+    def __init__(self, name: str):
+        self.name = name
+        self.score = 0
+
+    def increment(self, value=1):
+        self.score += value
+
+
 # Gets file of player details as a list for authenticate()
 with open("player_list.csv") as f:
     player_list = f.read().splitlines()
@@ -50,3 +59,25 @@ def add_player():
     print()
     print(f"{name} added!")
     print()
+
+
+def authenticate_two_players() -> (Player, Player):
+    p1_name = input("Player 1 please enter your name: ")
+    p1_pass = input("Player 1 please enter your password: ")
+
+    authenticate(p1_name, p1_pass)
+    p1 = Player(p1_name)
+
+    p2_name = input("Player 2 please enter your name: ")
+    p2_pass = input("Player 2 please enter your password: ")
+
+    # Check that player 2 is a different person
+    if p2_name == p1.name:
+        print(f"Sorry, {p2_name}, but that's the same account as player 1.")
+        input("Press enter to exit")
+        quit()
+
+    authenticate(p2_name, p2_pass)
+    p2 = Player(p2_name)
+
+    return p1, p2
