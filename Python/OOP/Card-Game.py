@@ -14,7 +14,7 @@ class Card:
 def win_hand(player_name: str, card_list: list):
     """Append cards to winner's stack and report win."""
     # Appends both cards to the winner's card stack
-    card_list.append(p1ActiveCard)
+    card_list.append(player1.active_card)
     card_list.append(p2ActiveCard)
     print(f"{player_name} won that hand!")
     print()
@@ -33,18 +33,18 @@ def compare(card1: Card, card2: Card):
     """Compare cards to find winner of hand."""
     if card1.colour == card2.colour:
         if card1.number > card2.number:
-            win_hand(p1Name, p1Cards)
+            win_hand(player1.name, p1Cards)
         else:
-            win_hand(p2Name, p2Cards)
+            win_hand(player2.name, p2Cards)
 
         return
 
     colour = card1.colour + "," + card2.colour
     win_colour = colourDict.get(colour)
     if win_colour == card1.colour:
-        win_hand(p1Name, p1Cards)
+        win_hand(player1.name, p1Cards)
     else:
-        win_hand(p2Name, p2Cards)
+        win_hand(player2.name, p2Cards)
 
 
 # ===== Welcome & Rules
@@ -60,21 +60,7 @@ if addPlayerFlag == 1:
 print()
 
 # Authenticate players
-p1Name = input("Player 1 please enter your name: ")
-p1Pass = input("And your password: ")
-
-authenticate(p1Name, p1Pass)
-
-p2Name = input("Player 2 please enter your name: ")
-p2Pass = input("And your password: ")
-
-# Check that player 2 is a different person
-if p2Name == p1Name:
-    print(f"Sorry, {p2Name}, but that's the same account as player 1.")
-    input("Press enter to exit")
-    quit()
-
-authenticate(p2Name, p2Pass)
+player1, player2 = authenticate_two_players()
 
 # ===== The Game
 
@@ -96,18 +82,18 @@ handNum = 1
 
 while len(deckList) > 0:
     print(f"Hand: {handNum}")
-    p1ActiveCard = deckList[0]
+    player1.active_card = deckList[0]
     del deckList[0]
     p2ActiveCard = deckList[0]
     del deckList[0]
 
-    print(f"{p1Name} drew a {p1ActiveCard}")
-    print(f"{p2Name} drew a {p2ActiveCard}")
+    print(f"{player1.name} drew a {player1.active_card}")
+    print(f"{player2.name} drew a {p2ActiveCard}")
     print()
     input("Press enter to continue")
     print()
 
-    compare(p1ActiveCard, p2ActiveCard)
+    compare(player1.active_card, p2ActiveCard)
 
     handNum = handNum + 1
 
@@ -116,11 +102,11 @@ input("The winner is...")
 print()
 
 if len(p1Cards) > len(p2Cards):
-    winner = p1Name
+    winner = player1.name
     winNum = len(p1Cards)
     win_cards = p1Cards
 else:
-    winner = p2Name
+    winner = player2.name
     winNum = len(p2Cards)
     win_cards = p2Cards
 
@@ -155,5 +141,5 @@ for i in range(5):
 print()
 input("Press enter to finish")
 print()
-print(f"Thank you, {p1Name} and {p2Name}, for playing The Card Game!")
+print(f"Thank you, {player1.name} and {player2.name}, for playing The Card Game!")
 input("Goodbye!")

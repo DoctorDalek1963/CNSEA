@@ -48,36 +48,4 @@ if addPlayerFlag == 1:
 print()
 
 # Authenticate players
-p1Name = input("Player 1 please enter your name: ")
-p1Pass = input("And your password: ")
-
-authenticate(p1Name, p1Pass)
-
-p2Name = input("Player 2 please enter your name: ")
-p2Pass = input("And your password: ")
-
-# Check that player 2 is a different person
-if p2Name == p1Name:
-    print(f"Sorry, {p2Name}, but that's the same account as player 1.")
-    input("Press enter to exit")
-    quit()
-
-authenticate(p2Name, p2Pass)
-
-endFlag = False
-activePlayer = 1
-p1Score = p2Score = score = 0
-name = ""
-
-while not endFlag:
-
-    if activePlayer == 1:
-        p1Score = play_round(p1Name, p1Score)
-        activePlayer = 2
-
-    elif activePlayer == 2:
-        p2Score = play_round(p2Name, p2Score)
-        activePlayer = 1
-
-
-#
+player1, player2 = authenticate_two_players()
