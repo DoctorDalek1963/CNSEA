@@ -62,6 +62,7 @@ def add_player():
 
 
 def authenticate_two_players() -> (Player, Player):
+    """Call authenticate() on two players and return a tuple of two Player objects."""
     p1_name = input("Player 1 please enter your name: ")
     p1_pass = input("Player 1 please enter your password: ")
 
@@ -81,3 +82,38 @@ def authenticate_two_players() -> (Player, Player):
     p2 = Player(p2_name)
 
     return p1, p2
+
+
+def write_score(score_file_name: str, score_text: str):
+    """Try to write score to file."""
+    if not score_text.endswith("\n"):
+        score_text = score_text + "\n"
+
+    try:
+        with open(score_file_name, "a") as file:
+            file.write(score_text)
+    except FileNotFoundError:
+        print(score_file_name + " not found")
+
+
+def display_high_scores(score_file_name: str):
+    """Display the top 5 high scores."""
+    try:
+        # Create list of all scores as Score objects
+        with open(score_file_name) as file:
+            scores_list = [Score(line.split(",")[0], int(line.split(",")[1])) for line in file.read().splitlines()]
+
+    except FileNotFoundError:
+        print(score_file_name + " not found")
+        return
+
+    scores_list.sort(key=lambda x: x.number, reverse=True)
+
+    input("These are the high scores:")
+    print()
+
+    for i in range(5):
+        try:
+            print(scores_list[i])
+        except IndexError:
+            break  # Stops loop if IndexError occurs

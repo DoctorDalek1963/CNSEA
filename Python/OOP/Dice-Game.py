@@ -76,23 +76,9 @@ else:
 
 print(f"The winner is {winner}!")
 
-with open("dice_game_scores.csv", "a") as f:
-    f.write(f"{winner},{winNum}\n")
+write_score("dice_game_scores.csv", winner + "," + str(winNum))
 
-# Create list of all scores as Score objects
-with open("dice_game_scores.csv") as f:
-    scoresList = [Score(line.split(",")[0], int(line.split(",")[1])) for line in f.read().splitlines()]
-
-scoresList.sort(key=lambda x: x.number, reverse=True)
-
-input("These are the high scores:")
-print()
-
-for i in range(5):
-    try:
-        print(scoresList[i])
-    except IndexError:
-        break  # Stops loop if IndexError occurs
+display_high_scores("dice_game_scores.csv")
 
 print()
 input("Press enter to finish")
