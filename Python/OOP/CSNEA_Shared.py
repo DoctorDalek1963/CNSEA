@@ -17,7 +17,7 @@ class Player:
         self.name = name
         self.score = 0
 
-    def increment(self, value=1):
+    def increment_score(self, value=1):
         self.score += value
 
 

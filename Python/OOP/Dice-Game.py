@@ -52,8 +52,8 @@ player1, player2 = authenticate_two_players()
 
 # Roll 5 dice and calculate all scores
 for _ in range(5):
-    player1.increment(dice_roll(player1.name))
-    player2.increment(dice_roll(player2.name))
+    player1.increment_score(dice_roll(player1.name))
+    player2.increment_score(dice_roll(player2.name))
     print(f"{player1.name}'s score is {player1.score} and {player2.name}'s score is {player2.score}")
     input("Press enter to continue")
     print()
