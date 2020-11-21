@@ -26,8 +26,8 @@ class Card {
 
 public class CardGame {
 
-    static String p1Name;
-    static String p2Name;
+    static Player player1;
+    static Player player2;
 
     static Card p1ActiveCard;
     static Card p2ActiveCard;
@@ -55,9 +55,9 @@ public class CardGame {
         // If colours are equal, higher number wins
         if (card1.getColour().equals(card2.getColour())) {
             if (card1.getNumber() > card2.getNumber()) {
-                winHand(p1Name, p1Cards);
+                winHand(player1.getName(), p1Cards);
             } else {
-                winHand(p2Name, p2Cards);
+                winHand(player2.getName(), p2Cards);
             }
         } else {
             // If numbers are the same, compare colours to find winner
@@ -74,9 +74,9 @@ public class CardGame {
 
             // Use winColour to find winning player
             if (winColour.equals(card1.getColour())) {
-                winHand(p1Name, p1Cards);
+                winHand(player1.getName(), p1Cards);
             } else if (winColour.equals(card2.getColour())) {
-                winHand(p2Name, p2Cards);
+                winHand(player2.getName(), p2Cards);
             } else {
                 // If neither player wins, print error message
                 System.out.println("Unhandled winColour exception in CardGame.compare().");
@@ -98,29 +98,16 @@ public class CardGame {
             }
         }
 
-        System.out.print("Player 1, please enter your username: ");
-        p1Name = inputScanner.nextLine();
-
-        System.out.print("Player 1, please enter your password: ");
-        String p1Pass = inputScanner.nextLine();
-
-        GameMethods.authenticate(p1Name, p1Pass);
-
-        System.out.print("Player 2, please enter your username: ");
-        p2Name = inputScanner.nextLine();
-
-        System.out.print("Player 2, please enter your password: ");
-        String p2Pass = inputScanner.nextLine();
+        Player player1 = GameMethods.authenticateReturnPlayer(1);
+        Player player2 = GameMethods.authenticateReturnPlayer(2);
 
         // If same account, quit program
-        if (p1Name.equals(p2Name)) {
-            System.out.println("Sorry, " + p2Name + ", but that's the same account as player 1.");
+        if (player1.getName().equals(player2.getName())) {
+            System.out.println("Sorry, " + player2.getName() + ", but that's the same account as player 1.");
             System.out.println("Press enter to exit");
             inputScanner.nextLine();
             System.exit(0);
         }
-
-        GameMethods.authenticate(p2Name, p2Pass);
 
         // Create ArrayList of Cards to allow for shuffling later
         ArrayList<Card> deckList = new ArrayList<>();
@@ -157,8 +144,8 @@ public class CardGame {
             p1ActiveCard = deck[i];
             p2ActiveCard = deck[i + 1];
 
-            System.out.println(p1Name + " drew a " + p1ActiveCard.getColour() + " " + p1ActiveCard.getNumber());
-            System.out.println(p2Name + " drew a " + p2ActiveCard.getColour() + " " + p2ActiveCard.getNumber());
+            System.out.println(player1.getName() + " drew a " + p1ActiveCard.getColour() + " " + p1ActiveCard.getNumber());
+            System.out.println(player2.getName() + " drew a " + p2ActiveCard.getColour() + " " + p2ActiveCard.getNumber());
             System.out.println();
             System.out.println("Press enter to continue.");
             inputScanner.nextLine();
@@ -180,11 +167,11 @@ public class CardGame {
 
         // Find winner from length of card stacks
         if (p1Cards.size() > p2Cards.size()) {
-            winner = p1Name;
+            winner = player1.getName();
             winNum = p1Cards.size();
             winCards = p1Cards;
         } else {
-            winner = p2Name;
+            winner = player2.getName();
             winNum = p2Cards.size();
             winCards = p2Cards;
         }
@@ -210,7 +197,7 @@ public class CardGame {
         System.out.println();
         System.out.println("Press enter to finish.");
         inputScanner.nextLine();
-        System.out.println("Thank you, " + p1Name + " and " + p2Name + ", for playing The Card Game!");
+        System.out.println("Thank you, " + player1.getName() + " and " + player2.getName() + ", for playing The Card Game!");
         inputScanner.nextLine();
     }
 

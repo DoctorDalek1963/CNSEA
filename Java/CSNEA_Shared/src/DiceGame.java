@@ -2,9 +2,6 @@ import java.util.*;
 
 public class DiceGame {
 
-    static String p1Name;
-    static String p2Name;
-
     static int p1Score = 0;
     static int p2Score = 0;
 
@@ -62,35 +59,22 @@ public class DiceGame {
             }
         }
 
-        System.out.print("Player 1, please enter your username: ");
-        p1Name = inputScanner.nextLine();
-
-        System.out.print("Player 1, please enter your password: ");
-        String p1Pass = inputScanner.nextLine();
-
-        GameMethods.authenticate(p1Name, p1Pass);
-
-        System.out.print("Player 2, please enter your username: ");
-        p2Name = inputScanner.nextLine();
-
-        System.out.print("Player 2, please enter your password: ");
-        String p2Pass = inputScanner.nextLine();
+        Player player1 = GameMethods.authenticateReturnPlayer(1);
+        Player player2 = GameMethods.authenticateReturnPlayer(2);
 
         // If same account, quit program
-        if (p1Name.equals(p2Name)) {
-            System.out.println("Sorry, " + p2Name + ", but that's the same account as player 1.");
+        if (player1.getName().equals(player2.getName())) {
+            System.out.println("Sorry, " + player2.getName() + ", but that's the same account as player 1.");
             System.out.println("Press enter to exit");
             inputScanner.nextLine();
             System.exit(0);
         }
 
-        GameMethods.authenticate(p2Name, p2Pass);
-
         // Do 5 rounds of dice rolling
         for (int i = 0; i < 5; i++) {
-            p1Score = diceRoll(p1Name, p1Score);
-            p2Score = diceRoll(p2Name, p2Score);
-            System.out.println(p1Name + "'s score is " + p1Score + " and " + p2Name + "'s score is " + p2Score);
+            p1Score = diceRoll(player1.getName(), p1Score);
+            p2Score = diceRoll(player2.getName(), p2Score);
+            System.out.println(player1.getName() + "'s score is " + p1Score + " and " + player2.getName() + "'s score is " + p2Score);
             System.out.println("Press enter to continue.");
             inputScanner.nextLine();
             System.out.println();
@@ -101,7 +85,7 @@ public class DiceGame {
             System.out.println("It's a tie! Let's roll; another die to determine the winner!");
             p1Score += random.nextInt(6) + 1;
             p2Score += random.nextInt(6) + 1;
-            System.out.println(p1Name + "'s score is " + p1Score + " and " + p2Name + "'s score is " + p2Score);
+            System.out.println(player1.getName() + "'s score is " + p1Score + " and " + player2.getName() + "'s score is " + p2Score);
             System.out.println("That means...");
         }
 
@@ -110,10 +94,10 @@ public class DiceGame {
 
         // Decide winner
         if (p1Score > p2Score) {
-            winner = p1Name;
+            winner = player1.getName();
             winNum = p1Score;
         } else {
-            winner = p2Name;
+            winner = player2.getName();
             winNum = p2Score;
         }
 
@@ -128,7 +112,7 @@ public class DiceGame {
         System.out.println();
         System.out.println("Press enter to finish.");
         inputScanner.nextLine();
-        System.out.println("Thank you, " + p1Name + " and " + p2Name + ", for playing The Dice Game!");
+        System.out.println("Thank you, " + player1.getName() + " and " + player2.getName() + ", for playing The Dice Game!");
         inputScanner.nextLine();
     }
 }

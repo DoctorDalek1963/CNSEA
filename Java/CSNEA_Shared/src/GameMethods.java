@@ -7,7 +7,7 @@ public class GameMethods {
     static Scanner inputScanner = new Scanner(System.in);
 
 
-    public static void authenticate(String name, String password) {
+    private static void authenticate(String name, String password) {
         String playerDetails = name + "," + password;
         boolean match = false;
 
@@ -39,6 +39,17 @@ public class GameMethods {
         System.out.println();
         System.out.println("Welcome, " + name + "!");
         System.out.println();
+    }
+
+    public static Player authenticateReturnPlayer(int playerNum) {
+        System.out.println("Player " + playerNum + ", please enter your name:");
+        String name = inputScanner.nextLine();
+        System.out.println("Player " + playerNum + ", please enter your password:");
+        String password = inputScanner.nextLine();
+
+        authenticate(name, password);
+
+        return new Player(name);
     }
 
     public static void addPlayer() {
