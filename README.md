@@ -11,4 +11,3 @@ Included are:
 - The Visual Basic version of Task 3 (in two forms)
 - The Java versions of Tasks 2 and 3
 
-This is a nw line to test Git CLI for Windows
