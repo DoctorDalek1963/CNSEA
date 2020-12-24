@@ -14,8 +14,17 @@ class Song {
     }
 
     private String firstLetters() {
-        String[] letterList = songName.split(",");
-        return "AAA"; // TODO: FIX THIS
+        String[] wordList = songName.split(" ");
+        String uppers = "";
+        String letter;
+
+        // Loop over each word in songName, get the first letter, make it uppercase, and add to a string
+        for (String word : wordList) {
+            letter = word.substring(0, 1).toUpperCase();
+            uppers = uppers.concat(letter);
+        }
+
+        return uppers;
     }
 
     public String displayFirstLetters() {
