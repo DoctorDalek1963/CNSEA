@@ -8,9 +8,9 @@ class Song {
     private final String albumName;
 
     Song(String song, String artist, String album) {
-        this.songName = song;
-        this.artistName = artist;
-        this.albumName = album;
+        songName = song;
+        artistName = artist;
+        albumName = album;
     }
 
     private String firstLetters() {
@@ -19,7 +19,7 @@ class Song {
     }
 
     public String displayFirstLetters() {
-        return this.firstLetters() + " by " + artistName + " from " + albumName;
+        return firstLetters() + " by " + artistName + " from " + albumName;
     }
 }
 
