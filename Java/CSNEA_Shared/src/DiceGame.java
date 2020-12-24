@@ -90,7 +90,6 @@ public class DiceGame {
         }
 
         Player winner;
-        int winNum;
 
         // Decide winner
         if (p1Score > p2Score) {
