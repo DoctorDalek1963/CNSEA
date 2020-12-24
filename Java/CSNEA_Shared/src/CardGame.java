@@ -20,7 +20,7 @@ class Card {
     }
 
     public String displayName() {
-        return this.colour + " " + this.number;
+        return colour + " " + number;
     }
 }
 
