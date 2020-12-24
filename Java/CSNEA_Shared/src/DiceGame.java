@@ -89,23 +89,19 @@ public class DiceGame {
             System.out.println("That means...");
         }
 
-        String winner;
+        Player winner;
         int winNum;
 
         // Decide winner
         if (p1Score > p2Score) {
-            winner = player1.getName();
-            winNum = p1Score;
+            winner = player1;
         } else {
-            winner = player2.getName();
-            winNum = p2Score;
+            winner = player2;
         }
 
-        System.out.println("The winner is " + winner + "!");
+        System.out.println("The winner is " + winner.getName() + "!");
 
-        String winScore = winner + "," + winNum;
-
-        GameMethods.writeScore("dice_game_scores.csv", winScore);
+        GameMethods.writeScore("dice_game_scores.csv", winner);
 
         GameMethods.displayHighScores("dice_game_scores.csv");
 

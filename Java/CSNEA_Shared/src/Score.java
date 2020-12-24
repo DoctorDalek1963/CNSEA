@@ -13,6 +13,6 @@ public class Score {
     }
 
     public String displayName() {
-        return this.name + " - " + this.number;
+        return name + " - " + number;
     }
 }
