@@ -7,7 +7,7 @@ public class GameMethods {
     static Scanner inputScanner = new Scanner(System.in);
 
 
-    private static void authenticate(String name, String password) {
+    protected static void authenticate(String name, String password) {
         String playerDetails = name + "," + password;
         boolean match = false;
 
@@ -77,11 +77,11 @@ public class GameMethods {
         inputScanner.nextLine();
     }
 
-    public static void writeScore(String scoreFileName, String score) {
+    public static void writeScore(String scoreFileName, Player player) {
         try {
             // True enables append mode
             PrintWriter printWriter = new PrintWriter(new FileWriter(scoreFileName, true));
-            printWriter.println(score);
+            printWriter.println(player.getName() + "," + player.getScore());
             printWriter.close();
         }
         catch (IOException e) {

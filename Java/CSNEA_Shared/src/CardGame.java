@@ -20,7 +20,7 @@ class Card {
     }
 
     public String displayName() {
-        return colour + " " + number;
+        return this.colour + " " + this.number;
     }
 }
 
@@ -161,22 +161,22 @@ public class CardGame {
         inputScanner.nextLine();
 
         // Create variables for winner
-        String winner;
+        Player winner;
         int winNum;
         ArrayList<Card> winCards;
 
         // Find winner from length of card stacks
         if (p1Cards.size() > p2Cards.size()) {
-            winner = player1.getName();
+            winner = player1;
             winNum = p1Cards.size();
             winCards = p1Cards;
         } else {
-            winner = player2.getName();
+            winner = player2;
             winNum = p2Cards.size();
             winCards = p2Cards;
         }
 
-        String winScore = winner + "," + winNum;
+        winner.setScore(winNum); // Set the winner's score value to allow it to be written to a file properly
 
         System.out.println(winner + "! With " + winNum + " cards!");
         System.out.println();
@@ -190,7 +190,7 @@ public class CardGame {
 
         System.out.println();
 
-        GameMethods.writeScore("card_game_scores.csv", winScore);
+        GameMethods.writeScore("card_game_scores.csv", winner);
 
         GameMethods.displayHighScores("card_game_scores.csv");
 
