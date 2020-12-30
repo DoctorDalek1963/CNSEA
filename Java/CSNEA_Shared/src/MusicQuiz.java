@@ -60,8 +60,9 @@ public class MusicQuiz {
         String guessedSong = guessSong(randomSong);
         System.out.println();
 
+        // The 'replace' method removes apostrophes
         // This 'equalsIgnoreCase' method allows the user to not worry about case
-        if (guessedSong.equalsIgnoreCase(randomSong.getSongName())) {
+        if (guessedSong.replace("'", "").equalsIgnoreCase(randomSong.getSongName().replace("'", ""))) {
             System.out.println("That's correct! You get 3 points!");
             player.incrementScore(3);
             return;
