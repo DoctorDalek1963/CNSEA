@@ -60,6 +60,7 @@ public class MusicQuiz {
         String guessedSong = guessSong(randomSong);
         System.out.println();
 
+        // This 'equalsIgnoreCase' method allows the user to not worry about case
         if (guessedSong.equalsIgnoreCase(randomSong.getSongName())) {
             System.out.println("That's correct! You get 3 points!");
             player.incrementScore(3);
