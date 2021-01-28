@@ -1,3 +1,7 @@
+import java.util.*;
+import static java.lang.Float.parseFloat;
+import static java.lang.Integer.parseInt;
+
 class PizzaTopping {
     private final String name;
     private final String description;
@@ -24,9 +28,17 @@ class PizzaTopping {
     public String getPrice() {
         return price;
     }
+
+    public float getPriceAsFloat() {
+        return parseFloat(price);
+    }
 }
 
 public class PizzaSystem {
+
+    static Scanner inputScanner = new Scanner(System.in);
+
+    private ArrayList<PizzaTopping> orderItems;
 
     public static PizzaTopping[] pizzaToppings = {
             new PizzaTopping("Cheese & Tomato", "Italian-style six-cheese blend", "7.50"),
@@ -39,12 +51,34 @@ public class PizzaSystem {
             new PizzaTopping("The Works", "Pepperoni, sausage, ham, mushrooms, green peppers", "9.90")
     };
 
-    public static void main(String[] args) {
+    private static void addToppingToOrder() {
         System.out.println("Please choose a topping:");
         System.out.println();
 
         for (int i = 0; i < pizzaToppings.length; i++) {
             System.out.println((i + 1) + ") " + pizzaToppings[i].displayOption());
         }
+
+        // Ask the user to pick an option and keep looping until their input is valid
+        boolean validInput = false;
+        while (!validInput) {
+            String input = inputScanner.nextLine();
+            try {
+                int inputNum = parseInt(input);
+                if (inputNum > 0 & inputNum < (pizzaToppings.length + 1)) {
+                    validInput = true;
+                    inputNum -= 1;
+                    System.out.println("You have selected: " + pizzaToppings[inputNum].getName());
+                } else {
+                    System.out.println("That number is not in the valid range of 1-" + pizzaToppings.length + ". Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("That is not a number. Please try again.");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        addToppingToOrder();
     }
 }
