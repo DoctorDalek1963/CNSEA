@@ -13,25 +13,15 @@ class PizzaTopping {
         this.price = price;
     }
 
-    public String displayOption() {
-        return name + " - " + description + " - £" + price;
-    }
+    public String displayOption() { return name + " - " + description + " - £" + price; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() { return description; }
 
-    public String getPrice() {
-        return price;
-    }
+    public String getPrice() { return price; }
 
-    public float getPriceAsFloat() {
-        return parseFloat(price);
-    }
+    public float getPriceAsFloat() { return parseFloat(price); }
 }
 
 public class PizzaSystem {
