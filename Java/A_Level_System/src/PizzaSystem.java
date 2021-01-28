@@ -28,7 +28,7 @@ public class PizzaSystem {
 
     static Scanner inputScanner = new Scanner(System.in);
 
-    private ArrayList<PizzaTopping> orderItems;
+    static ArrayList<PizzaTopping> orderItems = new ArrayList<>();
 
     public static PizzaTopping[] pizzaToppings = {
             new PizzaTopping("Cheese & Tomato", "Italian-style six-cheese blend", "7.50"),
@@ -41,7 +41,7 @@ public class PizzaSystem {
             new PizzaTopping("The Works", "Pepperoni, sausage, ham, mushrooms, green peppers", "9.90")
     };
 
-    private static void addToppingToOrder() {
+    private static PizzaTopping selectTopping() {
         System.out.println("Please choose a topping:");
         System.out.println();
 
@@ -53,22 +53,38 @@ public class PizzaSystem {
         boolean validInput = false;
         while (!validInput) {
             String input = inputScanner.nextLine();
+            // Attempt to parse input as integer
             try {
                 int inputNum = parseInt(input);
+                // Make sure input is in range
                 if (inputNum > 0 & inputNum < (pizzaToppings.length + 1)) {
                     validInput = true;
                     inputNum -= 1;
                     System.out.println("You have selected: " + pizzaToppings[inputNum].getName());
+                    // Confirm selection
+                    System.out.println("Is this correct?");
+                    if (inputScanner.nextLine().matches("[Yy].*")) {
+                        return pizzaToppings[inputNum];
+                    } else {
+                        System.out.println("Please enter your corrected choice.");
+                        validInput = false; // Set this to false to run the loop again
+                    }
                 } else {
                     System.out.println("That number is not in the valid range of 1-" + pizzaToppings.length + ". Please try again.");
                 }
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException e) { // If input cannot be parsed as integer, try again
                 System.out.println("That is not a number. Please try again.");
             }
         }
+        throw new RuntimeException("This exception should never be reached. If it gets thrown, something has gone horribly wrong.");
     }
 
     public static void main(String[] args) {
-        addToppingToOrder();
+        orderItems.add(selectTopping());
+        orderItems.add(selectTopping());
+        orderItems.add(selectTopping());
+        for (PizzaTopping item : orderItems) {
+            System.out.println(item.getName());
+        }
     }
 }
