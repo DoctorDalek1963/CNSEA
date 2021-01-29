@@ -81,9 +81,8 @@ public class PizzaSystem {
         String beforeDecimal = nonPaddedPrice.split("[.]")[0];
         String afterDecimal = nonPaddedPrice.split("[.]")[1]; // The . is in [] because IntelliJ doesn't like "\." and I don't know why
 
-        if (afterDecimal.length() > 2) {
-            afterDecimal = afterDecimal.substring(0, 2);
-        } else if (afterDecimal.length() == 1) {
+        // In this scenario, the price will never have more than 1 decimal point
+        if (afterDecimal.length() == 1) {
             afterDecimal += "0";
         } else if (afterDecimal.length() == 0) {
             afterDecimal = "00";
