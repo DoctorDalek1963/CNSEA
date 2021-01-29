@@ -17,10 +17,6 @@ class PizzaTopping {
 
     public String getName() { return name; }
 
-    public String getDescription() { return description; }
-
-    public String getPrice() { return price; }
-
     public float getPriceAsFloat() { return parseFloat(price); }
 }
 
