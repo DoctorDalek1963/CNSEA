@@ -41,7 +41,7 @@ public class PizzaSystem {
             new PizzaTopping("The Works", "Pepperoni, sausage, ham, mushrooms, green peppers", "9.90")
     };
 
-    private static PizzaTopping selectTopping() {
+    private static PizzaTopping chooseTopping() {
         System.out.println("Please choose a topping:");
         System.out.println();
 
@@ -79,12 +79,93 @@ public class PizzaSystem {
         throw new RuntimeException("This exception should never be reached. If it gets thrown, something has gone horribly wrong.");
     }
 
-    public static void main(String[] args) {
-        orderItems.add(selectTopping());
-        orderItems.add(selectTopping());
-        orderItems.add(selectTopping());
+    private static String floatToPrice(float number) {
+        String nonPaddedPrice = Float.toString(number);
+
+        String beforeDecimal = nonPaddedPrice.split("[.]")[0];
+        String afterDecimal = nonPaddedPrice.split("[.]")[1]; // The . is in [] because IntelliJ doesn't like "\." and I don't know why
+
+        if (afterDecimal.length() > 2) {
+            afterDecimal = afterDecimal.substring(0, 2);
+        } else if (afterDecimal.length() == 1) {
+            afterDecimal += "0";
+        } else if (afterDecimal.length() == 0) {
+            afterDecimal = "00";
+        }
+
+        return beforeDecimal + "." + afterDecimal;
+    }
+
+    private static void showFullOrder() {
+        float total = 0;
+        System.out.println("Here is your full order:");
+        System.out.println();
+
         for (PizzaTopping item : orderItems) {
             System.out.println(item.getName());
+            total += item.getPriceAsFloat();
+        }
+
+        System.out.println();
+        System.out.println("That comes to a total of £" + floatToPrice(total));
+    }
+
+    // TODO: Finish these methods
+
+    private static void editOrder() {
+        // show full order with indices of orderItems next to them
+        // allow user to input an index of orderItems
+        // then allow them to choose a new topping in place of that item
+    }
+
+    private static void removeItemFromOrder() {
+        // show full order with indices of orderItems next to them
+        // allow user to input an index of orderItems
+        // delete that item of orderItems
+    }
+
+    private static boolean confirmOrder() {
+        // write order to file
+        return true;
+    }
+
+    public static void main(String[] args) {
+        boolean orderConfirmed = false;
+
+        while (!orderConfirmed) {
+            System.out.println("Please choose an option:");
+            System.out.println();
+            System.out.println("1) Add a pizza to your order");
+            System.out.println("2) Show your full order");
+            System.out.println("3) Edit your order");
+            System.out.println("4) Remove a pizza from your order");
+            System.out.println("5) Confirm order");
+
+            // Ask the user to pick an option and keep looping until their input is valid
+            boolean validInput = false;
+            int inputNum = 0;
+            while (!validInput) {
+                String input = inputScanner.nextLine();
+                // Attempt to parse input as integer
+                try {
+                    inputNum = parseInt(input);
+                    if (inputNum > 0 & inputNum <= 5) {
+                        validInput = true; // Break from loop
+                    } else {
+                        System.out.println("That number is not in the valid range of 1-5. Please try again.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("That is not a number. Please try again.");
+                }
+            }
+
+            switch (inputNum) {
+                case 1 -> orderItems.add(chooseTopping());
+                case 2 -> showFullOrder();
+                case 3 -> editOrder();
+                case 4 -> removeItemFromOrder();
+                case 5 -> orderConfirmed = confirmOrder();
+            }
         }
     }
 }
