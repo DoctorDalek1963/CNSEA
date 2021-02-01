@@ -1,6 +1,5 @@
 import java.util.*;
 import java.io.*;
-
 import static java.lang.Integer.parseInt;
 
 class PizzaTopping {
@@ -56,19 +55,24 @@ public class PizzaSystem {
                 if (inputNum > 0 & inputNum < (array.length + 1)) {
                     validInput = true;
                     inputNum -= 1;
+                    System.out.println();
                     System.out.println("You have selected: " + array[inputNum].getName());
                     // Confirm selection
                     System.out.println("Is this correct?");
                     if (inputScanner.nextLine().matches("[Yy].*")) {
+                        System.out.println();
                         return inputNum;
                     } else {
+                        System.out.println();
                         System.out.println("Please enter your corrected choice.");
                         validInput = false; // Set this to false to run the loop again
                     }
                 } else {
+                    System.out.println();
                     System.out.println("That number is not in the valid range of 1-" + array.length + ". Please try again.");
                 }
             } catch (NumberFormatException e) { // If input cannot be parsed as integer, try again
+                System.out.println();
                 System.out.println("That is not a number. Please try again.");
             }
         }
@@ -125,6 +129,7 @@ public class PizzaSystem {
 
         System.out.println();
         System.out.println("That comes to a total of " + floatToPrice(total));
+        System.out.println();
     }
 
     private static void editOrder() {
@@ -133,6 +138,7 @@ public class PizzaSystem {
             return;
         }
         int selection = selectItemFromOrder("Please select one item from your order to replace:");
+        PizzaTopping originalItem = orderItems.get(selection);
 
         // Create two temporary lists, discarding the item chosen to be replaced
         List<PizzaTopping> tempStartList = orderItems.subList(0, selection);
@@ -142,12 +148,15 @@ public class PizzaSystem {
         ArrayList<PizzaTopping> tempEnd = new ArrayList<>(tempEndList);
 
         // Get the user to choose a new item and add it to the end of the first temp list
-        tempStart.add(chooseTopping("Please choose a topping to replace it with:"));
+        PizzaTopping newItem = chooseTopping("Please choose a topping to replace it with:");
+        tempStart.add(newItem);
 
         // Replace orderItems with the two temporary lists
         orderItems.clear();
         orderItems.addAll(tempStart);
         orderItems.addAll(tempEnd);
+
+        System.out.println("Successfully replaced " + originalItem.getName() + " with " + newItem.getName() + ".");
     }
 
     private static void removeItemFromOrder() {
@@ -205,12 +214,14 @@ public class PizzaSystem {
                 // Attempt to parse input as integer
                 try {
                     inputNum = parseInt(input);
+                    System.out.println();
                     if (inputNum > 0 & inputNum <= 5) {
                         validInput = true; // Break from loop
                     } else {
                         System.out.println("That number is not in the valid range of 1-5. Please try again.");
                     }
                 } catch (NumberFormatException e) {
+                    System.out.println();
                     System.out.println("That is not a number. Please try again.");
                 }
             }
