@@ -1,23 +1,24 @@
 import java.util.*;
-import static java.lang.Float.parseFloat;
+import java.io.*;
+
 import static java.lang.Integer.parseInt;
 
 class PizzaTopping {
     private final String name;
     private final String description;
-    private final String price;
+    private final float price;
 
-    public PizzaTopping(String name, String description, String price) {
+    public PizzaTopping(String name, String description, float price) {
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public String displayOption() { return name + " - " + description + " - £" + price; }
+    public String displayOption() { return name + " - " + description + " - " + PizzaSystem.floatToPrice(price); }
 
     public String getName() { return name; }
 
-    public float getPriceAsFloat() { return parseFloat(price); }
+    public float getPrice() { return price; }
 }
 
 public class PizzaSystem {
@@ -27,18 +28,18 @@ public class PizzaSystem {
     static ArrayList<PizzaTopping> orderItems = new ArrayList<>();
 
     public static PizzaTopping[] pizzaToppings = {
-            new PizzaTopping("Cheese & Tomato", "Italian-style six-cheese blend", "7.50"),
-            new PizzaTopping("BBQ Chicken", "Chargrilled chicken, barbeque sauce, bacon, onions", "7.90"),
-            new PizzaTopping("Meat Feast", "Ham, pepperoni, sausage, bacon, spicy beef", "8.10"),
-            new PizzaTopping("Piri Piri Chicken", "Chilli pepper sauce, chargrilled chicken", "8.80"),
-            new PizzaTopping("Hawaii", "Ham, pineapple, mushrooms", "8.90"),
-            new PizzaTopping("Mediterranean", "Chorizo, Italian–style sausage, jalapeno sausage", "9.50"),
-            new PizzaTopping("The Mexican", "Jalapeno peppers, red peppers, spicy beef, onions", "9.70"),
-            new PizzaTopping("The Works", "Pepperoni, sausage, ham, mushrooms, green peppers", "9.90")
+            new PizzaTopping("Cheese & Tomato", "Italian-style six-cheese blend", 7.5F),
+            new PizzaTopping("BBQ Chicken", "Chargrilled chicken, barbeque sauce, bacon, onions", 7.9F),
+            new PizzaTopping("Meat Feast", "Ham, pepperoni, sausage, bacon, spicy beef", 8.1F),
+            new PizzaTopping("Piri Piri Chicken", "Chilli pepper sauce, chargrilled chicken", 8.8F),
+            new PizzaTopping("Hawaii", "Ham, pineapple, mushrooms", 8.9F),
+            new PizzaTopping("Mediterranean", "Chorizo, Italian–style sausage, jalapeno sausage", 9.5F),
+            new PizzaTopping("The Mexican", "Jalapeno peppers, red peppers, spicy beef, onions", 9.7F),
+            new PizzaTopping("The Works", "Pepperoni, sausage, ham, mushrooms, green peppers", 9.9F)
     };
 
-    private static PizzaTopping chooseTopping() {
-        System.out.println("Please choose a topping:");
+    private static PizzaTopping chooseTopping(String prompt) {
+        System.out.println(prompt);
         System.out.println();
 
         for (int i = 0; i < pizzaToppings.length; i++) {
@@ -48,7 +49,7 @@ public class PizzaSystem {
         return pizzaToppings[takeIntegerInputForArray(pizzaToppings)];
     }
 
-    private static String floatToPrice(float number) {
+    public static String floatToPrice(float number) {
         String nonPaddedPrice = Float.toString(number);
 
         String beforeDecimal = nonPaddedPrice.split("[.]")[0];
@@ -61,7 +62,7 @@ public class PizzaSystem {
             afterDecimal = "00";
         }
 
-        return beforeDecimal + "." + afterDecimal;
+        return "£" + beforeDecimal + "." + afterDecimal;
     }
 
     private static void showFullOrder() {
@@ -71,18 +72,18 @@ public class PizzaSystem {
 
         for (PizzaTopping item : orderItems) {
             System.out.println(item.getName());
-            total += item.getPriceAsFloat();
+            total += item.getPrice();
         }
 
         System.out.println();
-        System.out.println("That comes to a total of £" + floatToPrice(total));
+        System.out.println("That comes to a total of " + floatToPrice(total));
     }
 
     /**
      * Take user input as integer corresponding to item in PizzaTopping[] array. Will continue to loop until input is an integer in the range of the array.
      *
      * @param array Array of PizzaTopping objects
-     * @return User inputted integer. DOES NOT return array element.
+     * @return User inputted integer corresponding to array index. DOES NOT return array element.
      */
     private static int takeIntegerInputForArray(PizzaTopping[] array) {
         // Ask the user to pick an option and keep looping until their input is valid
@@ -127,16 +128,26 @@ public class PizzaSystem {
     }
 
     private static void editOrder() {
-        // TODO: then allow them to choose a new topping in place of that item
         if (!(orderItems.size() > 0)) {
             System.out.println("Your order is empty.");
             return;
         }
-        int selection = selectItemFromOrder("Please select one item from your order to edit:");
-        PizzaTopping newItem = chooseTopping();
+        int selection = selectItemFromOrder("Please select one item from your order to replace:");
 
-        // TODO: Replace orderItems.get(selection) with newItem
-        // Apparently this would be easier to do with a HashMap, so I'll learn how to do that later
+        // Create two temporary lists, discarding the item chosen to be replaced
+        List<PizzaTopping> tempStartList = orderItems.subList(0, selection);
+        List<PizzaTopping> tempEndList = orderItems.subList(selection + 1, orderItems.size());
+
+        ArrayList<PizzaTopping> tempStart = new ArrayList<>(tempStartList);
+        ArrayList<PizzaTopping> tempEnd = new ArrayList<>(tempEndList);
+
+        // Get the user to choose a new item and add it to the end of the first temp list
+        tempStart.add(chooseTopping("Please choose a topping to replace it with:"));
+
+        // Replace orderItems with the two temporary lists
+        orderItems.clear();
+        orderItems.addAll(tempStart);
+        orderItems.addAll(tempEnd);
     }
 
     private static void removeItemFromOrder() {
@@ -151,8 +162,27 @@ public class PizzaSystem {
     }
 
     private static boolean confirmOrder() {
-        // TODO: write order to file
-        return true;
+        float total = 0;
+        StringBuilder orderString = new StringBuilder();
+
+        for (PizzaTopping item : orderItems) {
+            total += item.getPrice();
+            orderString.append(item.getName()).append(",");
+        }
+
+        orderString.append(floatToPrice(total));
+
+        try {
+            // True enables append mode
+            PrintWriter printWriter = new PrintWriter(new FileWriter("orders.csv", true));
+            printWriter.println(orderString.toString());
+            printWriter.close();
+            System.out.println("Order confirmed.");
+            return true;
+        } catch (IOException e) {
+            System.out.println("Failed to write to orders.csv");
+            return false;
+        }
     }
 
     public static void main(String[] args) {
@@ -186,7 +216,7 @@ public class PizzaSystem {
             }
 
             switch (inputNum) {
-                case 1 -> orderItems.add(chooseTopping());
+                case 1 -> orderItems.add(chooseTopping("Please choose a topping:"));
                 case 2 -> showFullOrder();
                 case 3 -> editOrder();
                 case 4 -> removeItemFromOrder();
