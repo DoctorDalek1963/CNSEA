@@ -38,47 +38,6 @@ public class PizzaSystem {
             new PizzaTopping("The Works", "Pepperoni, sausage, ham, mushrooms, green peppers", 9.9F)
     };
 
-    private static PizzaTopping chooseTopping(String prompt) {
-        System.out.println(prompt);
-        System.out.println();
-
-        for (int i = 0; i < pizzaToppings.length; i++) {
-            System.out.println((i + 1) + ") " + pizzaToppings[i].displayOption());
-        }
-
-        return pizzaToppings[takeIntegerInputForArray(pizzaToppings)];
-    }
-
-    public static String floatToPrice(float number) {
-        String nonPaddedPrice = Float.toString(number);
-
-        String beforeDecimal = nonPaddedPrice.split("[.]")[0];
-        String afterDecimal = nonPaddedPrice.split("[.]")[1]; // The . is in [] because IntelliJ doesn't like "\." and I don't know why
-
-        // In this scenario, the price will never have more than 1 decimal point
-        if (afterDecimal.length() == 1) {
-            afterDecimal += "0";
-        } else if (afterDecimal.length() == 0) {
-            afterDecimal = "00";
-        }
-
-        return "£" + beforeDecimal + "." + afterDecimal;
-    }
-
-    private static void showFullOrder() {
-        float total = 0;
-        System.out.println("Here is your full order:");
-        System.out.println();
-
-        for (PizzaTopping item : orderItems) {
-            System.out.println(item.getName());
-            total += item.getPrice();
-        }
-
-        System.out.println();
-        System.out.println("That comes to a total of " + floatToPrice(total));
-    }
-
     /**
      * Take user input as integer corresponding to item in PizzaTopping[] array. Will continue to loop until input is an integer in the range of the array.
      *
@@ -125,6 +84,47 @@ public class PizzaSystem {
         }
 
         return takeIntegerInputForArray(orderItems.toArray(new PizzaTopping[0]));
+    }
+
+    public static String floatToPrice(float number) {
+        String nonPaddedPrice = Float.toString(number);
+
+        String beforeDecimal = nonPaddedPrice.split("[.]")[0];
+        String afterDecimal = nonPaddedPrice.split("[.]")[1]; // The . is in [] because IntelliJ doesn't like "\." and I don't know why
+
+        // In this scenario, the price will never have more than 1 decimal point
+        if (afterDecimal.length() == 1) {
+            afterDecimal += "0";
+        } else if (afterDecimal.length() == 0) {
+            afterDecimal = "00";
+        }
+
+        return "£" + beforeDecimal + "." + afterDecimal;
+    }
+
+    private static PizzaTopping chooseTopping(String prompt) {
+        System.out.println(prompt);
+        System.out.println();
+
+        for (int i = 0; i < pizzaToppings.length; i++) {
+            System.out.println((i + 1) + ") " + pizzaToppings[i].displayOption());
+        }
+
+        return pizzaToppings[takeIntegerInputForArray(pizzaToppings)];
+    }
+
+    private static void showFullOrder() {
+        float total = 0;
+        System.out.println("Here is your full order:");
+        System.out.println();
+
+        for (PizzaTopping item : orderItems) {
+            System.out.println(item.getName());
+            total += item.getPrice();
+        }
+
+        System.out.println();
+        System.out.println("That comes to a total of " + floatToPrice(total));
     }
 
     private static void editOrder() {
