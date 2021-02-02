@@ -45,12 +45,13 @@ public class PizzaSystem {
      */
     private static int takeIntegerInputForArray(PizzaTopping[] array) {
         // Ask the user to pick an option and keep looping until their input is valid
+        int inputNum = 0;
         boolean validInput = false;
         while (!validInput) {
             String input = inputScanner.nextLine();
             // Attempt to parse input as integer
             try {
-                int inputNum = parseInt(input);
+                inputNum = parseInt(input);
                 // Make sure input is in range
                 if (inputNum > 0 & inputNum < (array.length + 1)) {
                     validInput = true;
@@ -61,7 +62,7 @@ public class PizzaSystem {
                     System.out.println("Is this correct?");
                     if (inputScanner.nextLine().matches("[Yy].*")) {
                         System.out.println();
-                        return inputNum;
+                        break;
                     } else {
                         System.out.println();
                         System.out.println("Please enter your corrected choice.");
@@ -76,7 +77,7 @@ public class PizzaSystem {
                 System.out.println("That is not a number. Please try again.");
             }
         }
-        throw new RuntimeException("This exception should never be reached. If it gets thrown, something has gone horribly wrong.");
+        return inputNum;
     }
 
     private static int selectItemFromOrder(String prompt) {
