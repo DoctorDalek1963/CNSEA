@@ -134,7 +134,7 @@ public class PizzaSystem {
     }
 
     private static void editOrder() {
-        if (!(orderItems.size() > 0)) {
+        if ((orderItems.size() < 1)) {
             System.out.println("Your order is empty.");
             return;
         }
@@ -161,7 +161,7 @@ public class PizzaSystem {
     }
 
     private static void removeItemFromOrder() {
-        if (!(orderItems.size() > 0)) {
+        if ((orderItems.size() < 1)) {
             System.out.println("Your order is empty.");
             return;
         }
