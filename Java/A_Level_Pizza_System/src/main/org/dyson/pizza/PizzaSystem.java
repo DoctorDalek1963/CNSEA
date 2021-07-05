@@ -4,18 +4,11 @@ import java.util.*;
 import java.io.*;
 import static java.lang.Integer.parseInt;
 
-class PizzaTopping {
-    private final String name;
-    private final String description;
-    private final float price;
+record PizzaTopping(String name, String description, float price) {
 
-    public PizzaTopping(String name, String description, float price) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
+    public String displayOption() {
+        return name + " - " + description + " - " + PizzaSystem.floatToPrice(price);
     }
-
-    public String displayOption() { return name + " - " + description + " - " + PizzaSystem.floatToPrice(price); }
 
     public String getName() { return name; }
 
@@ -187,7 +180,7 @@ public class PizzaSystem {
         try {
             // True enables append mode
             PrintWriter printWriter = new PrintWriter(new FileWriter("orders.csv", true));
-            printWriter.println(orderString.toString());
+            printWriter.println(orderString);
             printWriter.close();
             System.out.println("Order confirmed.");
             return true;
