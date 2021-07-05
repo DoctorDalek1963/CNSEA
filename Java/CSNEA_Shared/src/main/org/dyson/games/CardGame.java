@@ -92,8 +92,8 @@ public class CardGame {
             }
         }
 
-        Player player1 = GameMethods.authenticateReturnPlayer(1);
-        Player player2 = GameMethods.authenticateReturnPlayer(2);
+        player1 = GameMethods.authenticateReturnPlayer(1);
+        player2 = GameMethods.authenticateReturnPlayer(2);
 
         // If same account, quit program
         if (player1.getName().equals(player2.getName())) {
@@ -172,7 +172,7 @@ public class CardGame {
 
         winner.setScore(winNum); // Set the winner's score value to allow it to be written to a file properly
 
-        System.out.println(winner + "! With " + winNum + " cards!");
+        System.out.println(winner.getName() + "! With " + winNum + " cards!");
         System.out.println();
         System.out.println("They had these cards:");
         inputScanner.nextLine();
