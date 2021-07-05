@@ -5,194 +5,194 @@ import java.util.*;
 
 record Card(String colour, int number) {
 
-    public String getColour() {
-        return colour;
-    }
+	public String getColour() {
+		return colour;
+	}
 
-    public int getNumber() {
-        return number;
-    }
+	public int getNumber() {
+		return number;
+	}
 
-    public String displayName() {
-        return this.colour + " " + this.number;
-    }
+	public String displayName() {
+		return this.colour + " " + this.number;
+	}
 }
 
 public class CardGame {
 
-    static Player player1;
-    static Player player2;
+	static Player player1;
+	static Player player2;
 
-    static Card p1ActiveCard;
-    static Card p2ActiveCard;
+	static Card p1ActiveCard;
+	static Card p2ActiveCard;
 
-    // Create ArrayLists for players' card stacks
-    static ArrayList<Card> p1Cards = new ArrayList<>();
-    static ArrayList<Card> p2Cards = new ArrayList<>();
+	// Create ArrayLists for players' card stacks
+	static ArrayList<Card> p1Cards = new ArrayList<>();
+	static ArrayList<Card> p2Cards = new ArrayList<>();
 
-    // Create scanner object to read input
-    static Scanner inputScanner = new Scanner(System.in);
-
-
-    public static void winHand(String name, ArrayList<Card> cardStack) {
-        // Add active Cards to player's card stack
-        cardStack.add(p1ActiveCard);
-        cardStack.add(p2ActiveCard);
-
-        System.out.println(name + " won that hand!");
-        System.out.println();
-        System.out.println("Press enter to continue.");
-        inputScanner.nextLine();
-    }
-
-    public static void compare(Card card1, Card card2) {
-        // If colours are equal, higher number wins
-        if (card1.getColour().equals(card2.getColour())) {
-            if (card1.getNumber() > card2.getNumber()) {
-                winHand(player1.getName(), p1Cards);
-            } else {
-                winHand(player2.getName(), p2Cards);
-            }
-        } else {
-            // If numbers are the same, compare colours to find winner
-            String colour = card1.getColour() + " " + card2.getColour();
-            String winColour = "";
-
-            if (colour.equals("Red Black") | colour.equals("Black Red")) {
-                winColour = "Red";
-            } else if (colour.equals("Yellow Red") | colour.equals("Red Yellow")) {
-                winColour = "Yellow";
-            } else if (colour.equals("Black Yellow") | colour.equals("Yellow Black")) {
-                winColour = "Black";
-            }
-
-            // Use winColour to find winning player
-            if (winColour.equals(card1.getColour())) {
-                winHand(player1.getName(), p1Cards);
-            } else if (winColour.equals(card2.getColour())) {
-                winHand(player2.getName(), p2Cards);
-            } else {
-                // If neither player wins, print error message
-                System.out.println("Unhandled winColour exception in CardGame.compare().");
-            }
-        }
-    }
+	// Create scanner object to read input
+	static Scanner inputScanner = new Scanner(System.in);
 
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to The Card Game!");
-        System.out.println("In this game, each player draws a card, the cards are compared and the winner takes both cards.");
-        System.out.println();
-        System.out.println("Press 1 to add a new player. Press enter to log in.");
+	public static void winHand(String name, ArrayList<Card> cardStack) {
+		// Add active Cards to player's card stack
+		cardStack.add(p1ActiveCard);
+		cardStack.add(p2ActiveCard);
 
-        // Call addPlayer() if input == "1"
-        if (inputScanner.hasNextLine()) {
-            if (inputScanner.nextLine().equals("1")) {
-                GameMethods.addPlayer();
-            }
-        }
+		System.out.println(name + " won that hand!");
+		System.out.println();
+		System.out.println("Press enter to continue.");
+		inputScanner.nextLine();
+	}
 
-        player1 = GameMethods.authenticateReturnPlayer(1);
-        player2 = GameMethods.authenticateReturnPlayer(2);
+	public static void compare(Card card1, Card card2) {
+		// If colours are equal, higher number wins
+		if (card1.getColour().equals(card2.getColour())) {
+			if (card1.getNumber() > card2.getNumber()) {
+				winHand(player1.getName(), p1Cards);
+			} else {
+				winHand(player2.getName(), p2Cards);
+			}
+		} else {
+			// If numbers are the same, compare colours to find winner
+			String colour = card1.getColour() + " " + card2.getColour();
+			String winColour = "";
 
-        // If same account, quit program
-        if (player1.getName().equals(player2.getName())) {
-            System.out.println("Sorry, " + player2.getName() + ", but that's the same account as player 1.");
-            System.out.println("Press enter to exit");
-            inputScanner.nextLine();
-            System.exit(0);
-        }
+			if (colour.equals("Red Black") | colour.equals("Black Red")) {
+				winColour = "Red";
+			} else if (colour.equals("Yellow Red") | colour.equals("Red Yellow")) {
+				winColour = "Yellow";
+			} else if (colour.equals("Black Yellow") | colour.equals("Yellow Black")) {
+				winColour = "Black";
+			}
 
-        // Create ArrayList of Cards to allow for shuffling later
-        ArrayList<Card> deckList = new ArrayList<>();
+			// Use winColour to find winning player
+			if (winColour.equals(card1.getColour())) {
+				winHand(player1.getName(), p1Cards);
+			} else if (winColour.equals(card2.getColour())) {
+				winHand(player2.getName(), p2Cards);
+			} else {
+				// If neither player wins, print error message
+				System.out.println("Unhandled winColour exception in CardGame.compare().");
+			}
+		}
+	}
 
-        // Read deck.csv into deckList
-        try {
-            File deckFile = new File("deck.csv");
-            Scanner deckScanner = new Scanner(deckFile);
 
-            while (deckScanner.hasNextLine()) {
-                String line = deckScanner.nextLine();
-                deckList.add(new Card(line.split(",")[0], Integer.parseInt(line.split(",")[1])));
-            }
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("deck.csv not found.");
-            e.printStackTrace();
-        }
+	public static void main(String[] args) {
+		System.out.println("Welcome to The Card Game!");
+		System.out.println("In this game, each player draws a card, the cards are compared and the winner takes both cards.");
+		System.out.println();
+		System.out.println("Press 1 to add a new player. Press enter to log in.");
 
-        // Shuffle deckList and create normal array called deck
-        Collections.shuffle(deckList);
-        Card[] deck = deckList.toArray(new Card[0]);
+		// Call addPlayer() if input == "1"
+		if (inputScanner.hasNextLine()) {
+			if (inputScanner.nextLine().equals("1")) {
+				GameMethods.addPlayer();
+			}
+		}
 
-        System.out.println("Press enter to start.");
-        inputScanner.nextLine();
-        System.out.println("Let's begin the game!");
-        inputScanner.nextLine();
+		player1 = GameMethods.authenticateReturnPlayer(1);
+		player2 = GameMethods.authenticateReturnPlayer(2);
 
-        int handNum = 1;
+		// If same account, quit program
+		if (player1.getName().equals(player2.getName())) {
+			System.out.println("Sorry, " + player2.getName() + ", but that's the same account as player 1.");
+			System.out.println("Press enter to exit");
+			inputScanner.nextLine();
+			System.exit(0);
+		}
 
-        // Loop over deck and compare top 2 Cards every time
-        for (int i = 0; i < deck.length; i = i + 2) {
-            System.out.println("Hand: " + handNum);
-            p1ActiveCard = deck[i];
-            p2ActiveCard = deck[i + 1];
+		// Create ArrayList of Cards to allow for shuffling later
+		ArrayList<Card> deckList = new ArrayList<>();
 
-            System.out.println(player1.getName() + " drew a " + p1ActiveCard.getColour() + " " + p1ActiveCard.getNumber());
-            System.out.println(player2.getName() + " drew a " + p2ActiveCard.getColour() + " " + p2ActiveCard.getNumber());
-            System.out.println();
-            System.out.println("Press enter to continue.");
-            inputScanner.nextLine();
+		// Read deck.csv into deckList
+		try {
+			File deckFile = new File("deck.csv");
+			Scanner deckScanner = new Scanner(deckFile);
 
-            // Compare Cards to find winner
-            compare(p1ActiveCard, p2ActiveCard);
+			while (deckScanner.hasNextLine()) {
+				String line = deckScanner.nextLine();
+				deckList.add(new Card(line.split(",")[0], Integer.parseInt(line.split(",")[1])));
+			}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("deck.csv not found.");
+			e.printStackTrace();
+		}
 
-            handNum++;
-        }
+		// Shuffle deckList and create normal array called deck
+		Collections.shuffle(deckList);
+		Card[] deck = deckList.toArray(new Card[0]);
 
-        System.out.println("All cards have been drawn!");
-        System.out.println("The winner is...");
-        inputScanner.nextLine();
+		System.out.println("Press enter to start.");
+		inputScanner.nextLine();
+		System.out.println("Let's begin the game!");
+		inputScanner.nextLine();
 
-        // Create variables for winner
-        Player winner;
-        int winNum;
-        ArrayList<Card> winCards;
+		int handNum = 1;
 
-        // Find winner from length of card stacks
-        if (p1Cards.size() > p2Cards.size()) {
-            winner = player1;
-            winNum = p1Cards.size();
-            winCards = p1Cards;
-        } else {
-            winner = player2;
-            winNum = p2Cards.size();
-            winCards = p2Cards;
-        }
+		// Loop over deck and compare top 2 Cards every time
+		for (int i = 0; i < deck.length; i = i + 2) {
+			System.out.println("Hand: " + handNum);
+			p1ActiveCard = deck[i];
+			p2ActiveCard = deck[i + 1];
 
-        winner.setScore(winNum); // Set the winner's score value to allow it to be written to a file properly
+			System.out.println(player1.getName() + " drew a " + p1ActiveCard.getColour() + " " + p1ActiveCard.getNumber());
+			System.out.println(player2.getName() + " drew a " + p2ActiveCard.getColour() + " " + p2ActiveCard.getNumber());
+			System.out.println();
+			System.out.println("Press enter to continue.");
+			inputScanner.nextLine();
 
-        System.out.println(winner.getName() + "! With " + winNum + " cards!");
-        System.out.println();
-        System.out.println("They had these cards:");
-        inputScanner.nextLine();
+			// Compare Cards to find winner
+			compare(p1ActiveCard, p2ActiveCard);
 
-        // Print all Cards
-        for (Card card : winCards) {
-            System.out.println(card.displayName());
-        }
+			handNum++;
+		}
 
-        System.out.println();
+		System.out.println("All cards have been drawn!");
+		System.out.println("The winner is...");
+		inputScanner.nextLine();
 
-        GameMethods.writeScore("card_game_scores.csv", winner);
+		// Create variables for winner
+		Player winner;
+		int winNum;
+		ArrayList<Card> winCards;
 
-        GameMethods.displayHighScores("card_game_scores.csv");
+		// Find winner from length of card stacks
+		if (p1Cards.size() > p2Cards.size()) {
+			winner = player1;
+			winNum = p1Cards.size();
+			winCards = p1Cards;
+		} else {
+			winner = player2;
+			winNum = p2Cards.size();
+			winCards = p2Cards;
+		}
 
-        System.out.println();
-        System.out.println("Press enter to finish.");
-        inputScanner.nextLine();
-        System.out.println("Thank you, " + player1.getName() + " and " + player2.getName() + ", for playing The Card Game!");
-        inputScanner.nextLine();
-    }
+		winner.setScore(winNum); // Set the winner's score value to allow it to be written to a file properly
+
+		System.out.println(winner.getName() + "! With " + winNum + " cards!");
+		System.out.println();
+		System.out.println("They had these cards:");
+		inputScanner.nextLine();
+
+		// Print all Cards
+		for (Card card : winCards) {
+			System.out.println(card.displayName());
+		}
+
+		System.out.println();
+
+		GameMethods.writeScore("card_game_scores.csv", winner);
+
+		GameMethods.displayHighScores("card_game_scores.csv");
+
+		System.out.println();
+		System.out.println("Press enter to finish.");
+		inputScanner.nextLine();
+		System.out.println("Thank you, " + player1.getName() + " and " + player2.getName() + ", for playing The Card Game!");
+		inputScanner.nextLine();
+	}
 
 }
