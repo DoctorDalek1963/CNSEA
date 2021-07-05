@@ -1,15 +1,9 @@
+package org.dyson.games;
+
 import java.io.*;
 import java.util.*;
 
-class Card {
-
-    private final String colour;
-    private final int number;
-
-    Card(String colour, int number) {
-        this.colour = colour;
-        this.number = number;
-    }
+record Card(String colour, int number) {
 
     public String getColour() {
         return colour;

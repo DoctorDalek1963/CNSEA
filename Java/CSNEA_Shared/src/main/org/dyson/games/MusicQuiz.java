@@ -1,3 +1,5 @@
+package org.dyson.games;
+
 import java.io.*;
 import java.util.*;
 
@@ -13,9 +15,7 @@ class Song {
         albumName = album;
     }
 
-    public String getSongName() {
-        return songName;
-    }
+    public String getSongName() { return songName; }
 
     private String firstLetters() {
         String[] wordList = songName.split(" ");

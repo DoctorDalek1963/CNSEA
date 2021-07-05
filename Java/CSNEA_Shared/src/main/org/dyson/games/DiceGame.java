@@ -1,3 +1,5 @@
+package org.dyson.games;
+
 import java.util.*;
 
 public class DiceGame {
