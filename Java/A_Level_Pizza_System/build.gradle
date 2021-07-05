@@ -1,0 +1,13 @@
+plugins {
+	id 'java'
+}
+
+apply plugin: 'java'
+
+sourceSets {
+	main.java.srcDir 'src/main'
+}
+
+jar {
+	manifest.attributes 'Main-Class': 'org.dyson.pizza.PizzaSystem'
+}

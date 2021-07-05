@@ -4,3 +4,15 @@
 **/__pycache__/
 *.pyc
 *.iml
+
+# Ignore gradle things for Java projects
+Java/**/.gradle/
+Java/**/build/
+Java/**/gradlew
+Java/**/gradlew.bat
+
+Java/**/*.class
+Java/**/*.jar
+
+!Java/**/gradle/wrapper/gradle-wrapper.jar
+Java/**/gradle/wrapper/gradle-wrapper.properties
