@@ -33,7 +33,6 @@ public class CardGame {
 	// Create scanner object to read input
 	static Scanner inputScanner = new Scanner(System.in);
 
-
 	public static void winHand(String name, ArrayList<Card> cardStack) {
 		// Add active Cards to player's card stack
 		cardStack.add(p1ActiveCard);
@@ -48,6 +47,7 @@ public class CardGame {
 	public static void compare(Card card1, Card card2) {
 		// If colours are equal, higher number wins
 		if (card1.getColour().equals(card2.getColour())) {
+			// If the colours are equal, then the numbers must be different, so we don't have to worry about a bias
 			if (card1.getNumber() > card2.getNumber()) {
 				winHand(player1.getName(), p1Cards);
 			} else {
@@ -77,7 +77,6 @@ public class CardGame {
 			}
 		}
 	}
-
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to The Card Game!");
@@ -138,8 +137,8 @@ public class CardGame {
 			p1ActiveCard = deck[i];
 			p2ActiveCard = deck[i + 1];
 
-			System.out.println(player1.getName() + " drew a " + p1ActiveCard.getColour() + " " + p1ActiveCard.getNumber());
-			System.out.println(player2.getName() + " drew a " + p2ActiveCard.getColour() + " " + p2ActiveCard.getNumber());
+			System.out.println(player1.getName() + " drew a " + p1ActiveCard.displayName());
+			System.out.println(player2.getName() + " drew a " + p2ActiveCard.displayName());
 			System.out.println();
 			System.out.println("Press enter to continue.");
 			inputScanner.nextLine();

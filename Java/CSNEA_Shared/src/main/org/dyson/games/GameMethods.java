@@ -8,7 +8,6 @@ public class GameMethods {
 	// Scanner object for reading input
 	static Scanner inputScanner = new Scanner(System.in);
 
-
 	public static void authenticate(String name, String password) {
 		String playerDetails = name + "," + password;
 		boolean match = false;
