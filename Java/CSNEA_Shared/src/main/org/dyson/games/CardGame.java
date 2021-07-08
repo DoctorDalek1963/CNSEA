@@ -126,7 +126,7 @@ public class CardGame {
 		int handNum = 1;
 
 		// Loop over deck and compare top 2 Cards every time
-		for (int i = 0; i < deck.length; i = i + 2) {
+		for (int i = 0; i < deck.length; i += 2) {
 			System.out.println("Hand: " + handNum);
 			p1ActiveCard = deck[i];
 			p2ActiveCard = deck[i + 1];
