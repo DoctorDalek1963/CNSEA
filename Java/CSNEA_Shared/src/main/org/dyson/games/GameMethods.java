@@ -9,7 +9,7 @@ public class GameMethods {
 	static Scanner inputScanner = new Scanner(System.in);
 
 
-	protected static void authenticate(String name, String password) {
+	public static void authenticate(String name, String password) {
 		String playerDetails = name + "," + password;
 		boolean match = false;
 
