@@ -31,9 +31,7 @@ class Song {
 		return uppers;
 	}
 
-	public String displayFirstLetters() {
-		return firstLetters() + " by " + artistName + " from " + albumName;
-	}
+	public String displayFirstLetters() { return firstLetters() + " by " + artistName + " from " + albumName; }
 }
 
 public class MusicQuiz {

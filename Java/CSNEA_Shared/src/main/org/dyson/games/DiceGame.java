@@ -12,7 +12,6 @@ public class DiceGame {
 	// Random object for generating random integers within bounds
 	static Random random = new Random();
 
-
 	public static int diceRoll(String name, int score) {
 		// Generate 2 random numbers from 1-6
 		int die1 = random.nextInt(6) + 1;

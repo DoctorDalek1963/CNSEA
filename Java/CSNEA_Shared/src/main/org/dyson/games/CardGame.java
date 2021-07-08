@@ -5,17 +5,11 @@ import java.util.*;
 
 record Card(String colour, int number) {
 
-	public String getColour() {
-		return colour;
-	}
+	public String getColour() { return colour; }
 
-	public int getNumber() {
-		return number;
-	}
+	public int getNumber() { return number; }
 
-	public String displayName() {
-		return this.colour + " " + this.number;
-	}
+	public String displayName() { return this.colour + " " + this.number; }
 }
 
 public class CardGame {
